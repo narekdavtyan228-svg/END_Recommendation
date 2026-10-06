@@ -1,0 +1,243 @@
+{
+ "id": "gen_04_questions",
+ "title": "неизвестные факторы: вопросы",
+ "params": true,
+ "request": {
+  "schemaVersion": "1.0",
+  "tenant": {
+   "orgCode": "OMG"
+  },
+  "end": {
+   "endRef": "end_golden",
+   "snapshotVersion": 1,
+   "contentHash": "sha256:3b27f30da430e6a496023ceb0ba4211e7b39883d43b53c88ac3d3d6886bfea2a",
+   "mode": "full"
+  },
+  "context": {
+   "workType": "RPO",
+   "categoryCode": "GP",
+   "unitCode": "NGDU-2",
+   "shopCode": null,
+   "description": "Плановые работы на скважине",
+   "startAt": "2026-09-18T10:41:00+05:00",
+   "endAt": "2026-09-19T10:41:00+05:00",
+   "flags": {
+    "adjacentApproval": true,
+    "gasAirControl": true,
+    "fireService": true,
+    "contractorStaff": false
+   },
+   "attachments": [
+    {
+     "kind": "scheme",
+     "count": 1
+    }
+   ],
+   "catalogVersion": "golden-cat-1"
+  },
+  "measures": [
+   {
+    "rowId": "m2",
+    "section": "5.3",
+    "text": "Установить заглушки на трубопроводах и перекрыть запорную арматуру перед работами",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m4",
+    "section": "5.5",
+    "text": "Оградить место проведения работ сигнальной лентой и выставить знаки безопасности",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m6",
+    "section": "5.7",
+    "text": "Предупредить персонал смежных участков о начале работ и согласовать порядок взаимодействия",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m8",
+    "section": "5.9",
+    "text": "Определить и довести до бригады безопасные маршруты движения к месту проведения работ",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m9",
+    "section": "5.10",
+    "text": "Провести целевой инструктаж бригады и проверить наличие средств защиты на месте",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   }
+  ],
+  "risks": [
+   {
+    "rowId": "r0",
+    "hazardId": 105,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 4,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   },
+   {
+    "rowId": "r1",
+    "hazardId": 106,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 5,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   },
+   {
+    "rowId": "r2",
+    "hazardId": 108,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 3,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   },
+   {
+    "rowId": "r3",
+    "hazardId": 109,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 3,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   }
+  ],
+  "factorAnswers": {},
+  "locale": "ru",
+  "requestedBy": {
+   "userRef": "u_golden",
+   "role": "issuer"
+  }
+ },
+ "expected": [
+  {
+   "rule": "N14",
+   "target": {
+    "type": "factor",
+    "factorCode": "F02"
+   },
+   "severity": "question"
+  },
+  {
+   "rule": "N14",
+   "target": {
+    "type": "factor",
+    "factorCode": "F08"
+   },
+   "severity": "question"
+  },
+  {
+   "rule": "N14",
+   "target": {
+    "type": "factor",
+    "factorCode": "F09"
+   },
+   "severity": "question"
+  },
+  {
+   "rule": "N14",
+   "target": {
+    "type": "factor",
+    "factorCode": "F05"
+   },
+   "severity": "question"
+  },
+  {
+   "rule": "N14",
+   "target": {
+    "type": "factor",
+    "factorCode": "F14"
+   },
+   "severity": "question"
+  },
+  {
+   "rule": "N14",
+   "target": {
+    "type": "factor",
+    "factorCode": "F07"
+   },
+   "severity": "question"
+  },
+  {
+   "rule": "N14",
+   "target": {
+    "type": "factor",
+    "factorCode": "F11"
+   },
+   "severity": "question"
+  },
+  {
+   "rule": "N14",
+   "target": {
+    "type": "factor",
+    "factorCode": "F12"
+   },
+   "severity": "question"
+  },
+  {
+   "rule": "MX",
+   "target": {
+    "type": "section",
+    "section": "5.4"
+   },
+   "severity": "critical"
+  }
+ ]
+}

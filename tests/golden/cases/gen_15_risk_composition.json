@@ -1,0 +1,182 @@
+{
+ "id": "gen_15_risk_composition",
+ "title": "состав рисков: обязательные и дубли",
+ "params": true,
+ "request": {
+  "schemaVersion": "1.0",
+  "tenant": {
+   "orgCode": "OMG"
+  },
+  "end": {
+   "endRef": "end_golden",
+   "snapshotVersion": 1,
+   "contentHash": "sha256:2d44645bc6955eaf65af2cafd3477aa4f2f7e4daea884974f0c93bb3d5034021",
+   "mode": "full"
+  },
+  "context": {
+   "workType": "RPO",
+   "categoryCode": "ZR",
+   "unitCode": "NGDU-2",
+   "shopCode": null,
+   "description": "Плановые работы на скважине",
+   "startAt": "2026-09-18T10:41:00+05:00",
+   "endAt": "2026-09-19T10:41:00+05:00",
+   "flags": {
+    "adjacentApproval": true,
+    "gasAirControl": true,
+    "fireService": true,
+    "contractorStaff": false
+   },
+   "attachments": [
+    {
+     "kind": "scheme",
+     "count": 1
+    }
+   ],
+   "catalogVersion": "golden-cat-1"
+  },
+  "measures": [
+   {
+    "rowId": "m4",
+    "section": "5.5",
+    "text": "Оградить место проведения работ сигнальной лентой и выставить знаки безопасности",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m6",
+    "section": "5.7",
+    "text": "Предупредить персонал смежных участков о начале работ и согласовать порядок взаимодействия",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m8",
+    "section": "5.9",
+    "text": "Определить и довести до бригады безопасные маршруты движения к месту проведения работ",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   }
+  ],
+  "risks": [
+   {
+    "rowId": "r0",
+    "hazardId": 100,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 4,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   },
+   {
+    "rowId": "r9",
+    "hazardId": 100,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 4,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   }
+  ],
+  "factorAnswers": {
+   "F01": "no",
+   "F02": "no",
+   "F03": "no",
+   "F04": "no",
+   "F05": "no",
+   "F06": "no",
+   "F07": "no",
+   "F08": "no",
+   "F09": "no",
+   "F10": "no",
+   "F11": "no",
+   "F12": "no",
+   "F14": "no",
+   "F16": "no",
+   "F19": "no",
+   "F20": "no",
+   "F25": "no",
+   "F27": "yes",
+   "F28": "no",
+   "F29": "no",
+   "F31": "no",
+   "F32": "no",
+   "F33": "no",
+   "F34": "no",
+   "F35": "no",
+   "F36": "no",
+   "F38": "no"
+  },
+  "locale": "ru",
+  "requestedBy": {
+   "userRef": "u_golden",
+   "role": "issuer"
+  }
+ },
+ "expected": [
+  {
+   "rule": "MX",
+   "target": {
+    "type": "section",
+    "section": "5.2"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "RA12",
+   "target": {
+    "type": "risks",
+    "field": "Падение в выемку"
+   },
+   "severity": "significant"
+  },
+  {
+   "rule": "RA13",
+   "target": {
+    "type": "risks",
+    "field": "Повреждение подземных коммуникаций"
+   },
+   "severity": "significant"
+  },
+  {
+   "rule": "RA14",
+   "target": {
+    "type": "risk",
+    "rowId": "r9"
+   },
+   "severity": "significant"
+  },
+  {
+   "rule": "RA22",
+   "target": {
+    "type": "risks"
+   },
+   "severity": "question"
+  }
+ ]
+}

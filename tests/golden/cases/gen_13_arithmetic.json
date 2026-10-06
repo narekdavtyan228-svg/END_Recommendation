@@ -1,0 +1,234 @@
+{
+ "id": "gen_13_arithmetic",
+ "title": "арифметика рисков",
+ "params": true,
+ "request": {
+  "schemaVersion": "1.0",
+  "tenant": {
+   "orgCode": "OMG"
+  },
+  "end": {
+   "endRef": "end_golden",
+   "snapshotVersion": 1,
+   "contentHash": "sha256:47da0ecd9b9c805779b6a60012e44269c9de3a9767db144be9ebcc8d97b53c74",
+   "mode": "full"
+  },
+  "context": {
+   "workType": "RPO",
+   "categoryCode": "GP",
+   "unitCode": "NGDU-2",
+   "shopCode": null,
+   "description": "Плановые работы на скважине",
+   "startAt": "2026-09-18T10:41:00+05:00",
+   "endAt": "2026-09-19T10:41:00+05:00",
+   "flags": {
+    "adjacentApproval": true,
+    "gasAirControl": true,
+    "fireService": true,
+    "contractorStaff": false
+   },
+   "attachments": [
+    {
+     "kind": "scheme",
+     "count": 1
+    }
+   ],
+   "catalogVersion": "golden-cat-1"
+  },
+  "measures": [
+   {
+    "rowId": "m2",
+    "section": "5.3",
+    "text": "Установить заглушки на трубопроводах и перекрыть запорную арматуру перед работами",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m4",
+    "section": "5.5",
+    "text": "Оградить место проведения работ сигнальной лентой и выставить знаки безопасности",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m6",
+    "section": "5.7",
+    "text": "Предупредить персонал смежных участков о начале работ и согласовать порядок взаимодействия",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m8",
+    "section": "5.9",
+    "text": "Определить и довести до бригады безопасные маршруты движения к месту проведения работ",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m9",
+    "section": "5.10",
+    "text": "Провести целевой инструктаж бригады и проверить наличие средств защиты на месте",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   }
+  ],
+  "risks": [
+   {
+    "rowId": "r0",
+    "hazardId": 105,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 9,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": 1,
+    "p2": 1,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null,
+    "r1": 3
+   },
+   {
+    "rowId": "r1",
+    "hazardId": 106,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 5,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   },
+   {
+    "rowId": "r2",
+    "hazardId": 108,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 3,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   },
+   {
+    "rowId": "r3",
+    "hazardId": 109,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 3,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   }
+  ],
+  "factorAnswers": {
+   "F01": "no",
+   "F02": "no",
+   "F03": "no",
+   "F04": "no",
+   "F05": "no",
+   "F06": "no",
+   "F07": "no",
+   "F08": "no",
+   "F09": "no",
+   "F10": "no",
+   "F11": "no",
+   "F12": "no",
+   "F14": "no",
+   "F16": "no",
+   "F19": "no",
+   "F20": "no",
+   "F25": "no",
+   "F27": "no",
+   "F28": "no",
+   "F29": "no",
+   "F31": "no",
+   "F32": "no",
+   "F33": "no",
+   "F34": "no",
+   "F35": "no",
+   "F36": "no",
+   "F38": "no"
+  },
+  "locale": "ru",
+  "requestedBy": {
+   "userRef": "u_golden",
+   "role": "issuer"
+  }
+ },
+ "expected": [
+  {
+   "rule": "RA03",
+   "target": {
+    "type": "risk",
+    "rowId": "r0",
+    "field": "b1"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "RA04",
+   "target": {
+    "type": "risk",
+    "rowId": "r0",
+    "field": "r1"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "RA06",
+   "target": {
+    "type": "risk",
+    "rowId": "r0"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "RA11",
+   "target": {
+    "type": "risk",
+    "rowId": "r0"
+   },
+   "severity": "significant"
+  }
+ ]
+}

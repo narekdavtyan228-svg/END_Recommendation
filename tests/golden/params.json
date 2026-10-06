@@ -1,0 +1,25 @@
+{
+ "P09": {
+  "warm_from": "04-01",
+  "warm_to": "10-31"
+ },
+ "P10": {
+  "scale_min": 1,
+  "scale_max": 5,
+  "zones": {
+   "requires_measures": 6,
+   "high": 12,
+   "unacceptable": 15
+  }
+ },
+ "P11": {
+  "fire_service": true
+ },
+ "P13": {
+  "Высокая": 4,
+  "Средняя": 3
+ },
+ "P14": {
+  "threshold": 6
+ }
+}

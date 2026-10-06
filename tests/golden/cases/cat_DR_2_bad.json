@@ -1,0 +1,110 @@
+{
+ "id": "cat_DR_2_bad",
+ "title": "другие: плохой ЭНД",
+ "params": true,
+ "request": {
+  "schemaVersion": "1.0",
+  "tenant": {
+   "orgCode": "OMG"
+  },
+  "end": {
+   "endRef": "end_golden",
+   "snapshotVersion": 1,
+   "contentHash": "sha256:c5cd43f368f16533e81d4d2068f30baf8e52d1eba20481c058779bf8c6bbd66d",
+   "mode": "full"
+  },
+  "context": {
+   "workType": "RPO",
+   "categoryCode": "DR",
+   "unitCode": "NGDU-2",
+   "shopCode": null,
+   "description": "Плановые работы на скважине",
+   "startAt": "2026-09-18T10:41:00+05:00",
+   "endAt": "2026-09-19T10:41:00+05:00",
+   "flags": {
+    "adjacentApproval": true,
+    "gasAirControl": true,
+    "fireService": true,
+    "contractorStaff": false
+   },
+   "attachments": [
+    {
+     "kind": "scheme",
+     "count": 1
+    }
+   ],
+   "catalogVersion": "golden-cat-1"
+  },
+  "measures": [
+   {
+    "rowId": "m4",
+    "section": "5.5",
+    "text": "test",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m8",
+    "section": "5.9",
+    "text": "Определить и довести до бригады безопасные маршруты движения к месту проведения работ",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   }
+  ],
+  "risks": [],
+  "factorAnswers": {
+   "F01": "no",
+   "F02": "no",
+   "F03": "no",
+   "F04": "no",
+   "F05": "no",
+   "F06": "no",
+   "F07": "no",
+   "F08": "no",
+   "F09": "no",
+   "F10": "no",
+   "F11": "no",
+   "F12": "no",
+   "F14": "no",
+   "F16": "no",
+   "F19": "no",
+   "F20": "no",
+   "F25": "no",
+   "F27": "no",
+   "F28": "no",
+   "F29": "no",
+   "F31": "no",
+   "F32": "no",
+   "F33": "no",
+   "F34": "no",
+   "F35": "no",
+   "F36": "no",
+   "F38": "no"
+  },
+  "locale": "ru",
+  "requestedBy": {
+   "userRef": "u_golden",
+   "role": "issuer"
+  }
+ },
+ "expected": [
+  {
+   "rule": "S02",
+   "target": {
+    "type": "measure",
+    "section": "5.5",
+    "rowId": "m4"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "RA01",
+   "target": {
+    "type": "risks"
+   },
+   "severity": "critical"
+  }
+ ]
+}

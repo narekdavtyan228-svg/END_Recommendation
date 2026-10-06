@@ -1,0 +1,2984 @@
+{
+ "components": {
+  "schemas": {
+   "ActionRequest": {
+    "additionalProperties": false,
+    "properties": {
+     "action": {
+      "enum": [
+       "accept",
+       "edit",
+       "reject",
+       "answer",
+       "hide",
+       "reopen"
+      ],
+      "title": "Action",
+      "type": "string"
+     },
+     "answer": {
+      "anyOf": [
+       {
+        "enum": [
+         "yes",
+         "no",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Answer"
+     },
+     "appliedText": {
+      "anyOf": [
+       {
+        "maxLength": 2000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Appliedtext"
+     },
+     "comment": {
+      "anyOf": [
+       {
+        "maxLength": 2000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Comment"
+     },
+     "reasonCode": {
+      "anyOf": [
+       {
+        "enum": [
+         "not_applicable",
+         "done_otherwise",
+         "ai_error",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reasoncode"
+     },
+     "userRef": {
+      "anyOf": [
+       {
+        "maxLength": 200,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Userref"
+     },
+     "userRole": {
+      "anyOf": [
+       {
+        "maxLength": 50,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Userrole"
+     }
+    },
+    "required": [
+     "action"
+    ],
+    "title": "ActionRequest",
+    "type": "object"
+   },
+   "AnswersRequest": {
+    "additionalProperties": false,
+    "properties": {
+     "contentHash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Contenthash",
+      "type": "string"
+     },
+     "factorAnswers": {
+      "additionalProperties": {
+       "enum": [
+        "yes",
+        "no",
+        "unknown"
+       ],
+       "type": "string"
+      },
+      "title": "Factoranswers",
+      "type": "object"
+     }
+    },
+    "required": [
+     "contentHash",
+     "factorAnswers"
+    ],
+    "title": "AnswersRequest",
+    "type": "object"
+   },
+   "Attachment": {
+    "additionalProperties": false,
+    "properties": {
+     "count": {
+      "minimum": 0.0,
+      "title": "Count",
+      "type": "integer"
+     },
+     "kind": {
+      "maxLength": 50,
+      "title": "Kind",
+      "type": "string"
+     }
+    },
+    "required": [
+     "kind",
+     "count"
+    ],
+    "title": "Attachment",
+    "type": "object"
+   },
+   "Autofix": {
+    "additionalProperties": false,
+    "properties": {
+     "after": {
+      "title": "After",
+      "type": "string"
+     },
+     "before": {
+      "title": "Before",
+      "type": "string"
+     },
+     "rowId": {
+      "title": "Rowid",
+      "type": "string"
+     }
+    },
+    "required": [
+     "rowId",
+     "before",
+     "after"
+    ],
+    "title": "Autofix",
+    "type": "object"
+   },
+   "Basis": {
+    "additionalProperties": false,
+    "properties": {
+     "clause": {
+      "default": "",
+      "title": "Clause",
+      "type": "string"
+     },
+     "doc": {
+      "default": "",
+      "title": "Doc",
+      "type": "string"
+     },
+     "excerpt": {
+      "default": "",
+      "title": "Excerpt",
+      "type": "string"
+     },
+     "status": {
+      "default": "none",
+      "enum": [
+       "verified",
+       "to_verify",
+       "linked",
+       "none"
+      ],
+      "title": "Status",
+      "type": "string"
+     },
+     "title": {
+      "default": "",
+      "title": "Title",
+      "type": "string"
+     },
+     "url": {
+      "default": "",
+      "title": "Url",
+      "type": "string"
+     }
+    },
+    "title": "Basis",
+    "type": "object"
+   },
+   "Body_upload_document_v1_admin_kb_documents_post": {
+    "properties": {
+     "file": {
+      "contentMediaType": "application/octet-stream",
+      "title": "File",
+      "type": "string"
+     },
+     "meta": {
+      "title": "Meta",
+      "type": "string"
+     }
+    },
+    "required": [
+     "file",
+     "meta"
+    ],
+    "title": "Body_upload_document_v1_admin_kb_documents_post",
+    "type": "object"
+   },
+   "CatControl": {
+    "additionalProperties": false,
+    "properties": {
+     "affects": {
+      "default": "",
+      "title": "Affects",
+      "type": "string"
+     },
+     "categories": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Categories",
+      "type": "array"
+     },
+     "hazard_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Hazard Ids",
+      "type": "array"
+     },
+     "id": {
+      "title": "Id",
+      "type": "integer"
+     },
+     "level": {
+      "default": "",
+      "title": "Level",
+      "type": "string"
+     },
+     "section": {
+      "default": "",
+      "title": "Section",
+      "type": "string"
+     },
+     "text": {
+      "title": "Text",
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "text"
+    ],
+    "title": "CatControl",
+    "type": "object"
+   },
+   "CatHazard": {
+    "additionalProperties": false,
+    "properties": {
+     "categories": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Categories",
+      "type": "array"
+     },
+     "control_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Control Ids",
+      "type": "array"
+     },
+     "harm_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Harm Ids",
+      "type": "array"
+     },
+     "id": {
+      "title": "Id",
+      "type": "integer"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "victim_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Victim Ids",
+      "type": "array"
+     }
+    },
+    "required": [
+     "id",
+     "name"
+    ],
+    "title": "CatHazard",
+    "type": "object"
+   },
+   "CatMeasure": {
+    "additionalProperties": false,
+    "properties": {
+     "applies_when": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Applies When",
+      "type": "array"
+     },
+     "categories": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Categories",
+      "type": "array"
+     },
+     "id": {
+      "title": "Id",
+      "type": "integer"
+     },
+     "section": {
+      "pattern": "^5\\.(?:[1-9]|10)$",
+      "title": "Section",
+      "type": "string"
+     },
+     "template_fields": {
+      "default": "",
+      "title": "Template Fields",
+      "type": "string"
+     },
+     "text": {
+      "maxLength": 2000,
+      "title": "Text",
+      "type": "string"
+     },
+     "type": {
+      "default": "",
+      "title": "Type",
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "section",
+     "text"
+    ],
+    "title": "CatMeasure",
+    "type": "object"
+   },
+   "CatNamed": {
+    "additionalProperties": false,
+    "properties": {
+     "id": {
+      "title": "Id",
+      "type": "integer"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "name"
+    ],
+    "title": "CatNamed",
+    "type": "object"
+   },
+   "CatProfile": {
+    "additionalProperties": false,
+    "properties": {
+     "factors": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "title": "Factors",
+      "type": "object"
+     },
+     "objects": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Objects",
+      "type": "array"
+     }
+    },
+    "title": "CatProfile",
+    "type": "object"
+   },
+   "CatTiming": {
+    "additionalProperties": false,
+    "properties": {
+     "before_start": {
+      "title": "Before Start",
+      "type": "boolean"
+     },
+     "id": {
+      "title": "Id",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "id",
+     "before_start"
+    ],
+    "title": "CatTiming",
+    "type": "object"
+   },
+   "CatalogBody": {
+    "additionalProperties": false,
+    "properties": {
+     "controls": {
+      "items": {
+       "$ref": "#/components/schemas/CatControl"
+      },
+      "title": "Controls",
+      "type": "array"
+     },
+     "deactivated_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Deactivated Ids",
+      "type": "array"
+     },
+     "harms": {
+      "items": {
+       "$ref": "#/components/schemas/CatNamed"
+      },
+      "title": "Harms",
+      "type": "array"
+     },
+     "hazards": {
+      "items": {
+       "$ref": "#/components/schemas/CatHazard"
+      },
+      "title": "Hazards",
+      "type": "array"
+     },
+     "hints": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "title": "Hints",
+      "type": "object"
+     },
+     "implement_when": {
+      "items": {
+       "$ref": "#/components/schemas/CatTiming"
+      },
+      "title": "Implement When",
+      "type": "array"
+     },
+     "measures": {
+      "items": {
+       "$ref": "#/components/schemas/CatMeasure"
+      },
+      "title": "Measures",
+      "type": "array"
+     },
+     "profiles": {
+      "additionalProperties": {
+       "$ref": "#/components/schemas/CatProfile"
+      },
+      "title": "Profiles",
+      "type": "object"
+     },
+     "version": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+     },
+     "victims": {
+      "items": {
+       "$ref": "#/components/schemas/CatNamed"
+      },
+      "title": "Victims",
+      "type": "array"
+     }
+    },
+    "required": [
+     "version"
+    ],
+    "title": "CatalogBody",
+    "type": "object"
+   },
+   "CheckRequest": {
+    "additionalProperties": false,
+    "properties": {
+     "context": {
+      "$ref": "#/components/schemas/Context"
+     },
+     "end": {
+      "$ref": "#/components/schemas/EndInfo"
+     },
+     "factorAnswers": {
+      "additionalProperties": {
+       "enum": [
+        "yes",
+        "no",
+        "unknown"
+       ],
+       "type": "string"
+      },
+      "title": "Factoranswers",
+      "type": "object"
+     },
+     "locale": {
+      "default": "ru",
+      "enum": [
+       "ru",
+       "kk"
+      ],
+      "title": "Locale",
+      "type": "string"
+     },
+     "measures": {
+      "items": {
+       "$ref": "#/components/schemas/Measure"
+      },
+      "title": "Measures",
+      "type": "array"
+     },
+     "requestedBy": {
+      "$ref": "#/components/schemas/RequestedBy"
+     },
+     "risks": {
+      "items": {
+       "$ref": "#/components/schemas/Risk"
+      },
+      "maxItems": 50,
+      "title": "Risks",
+      "type": "array"
+     },
+     "schemaVersion": {
+      "const": "1.0",
+      "title": "Schemaversion",
+      "type": "string"
+     },
+     "tenant": {
+      "$ref": "#/components/schemas/Tenant"
+     }
+    },
+    "required": [
+     "schemaVersion",
+     "tenant",
+     "end",
+     "context",
+     "requestedBy"
+    ],
+    "title": "CheckRequest",
+    "type": "object"
+   },
+   "CheckResult": {
+    "additionalProperties": false,
+    "properties": {
+     "autofixes": {
+      "items": {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      "title": "Autofixes",
+      "type": "array"
+     },
+     "catalogVersion": {
+      "default": "",
+      "title": "Catalogversion",
+      "type": "string"
+     },
+     "contentHash": {
+      "title": "Contenthash",
+      "type": "string"
+     },
+     "findings": {
+      "items": {
+       "$ref": "#/components/schemas/Finding"
+      },
+      "title": "Findings",
+      "type": "array"
+     },
+     "llm": {
+      "enum": [
+       "pending",
+       "skipped",
+       "done",
+       "unavailable",
+       "invalid"
+      ],
+      "title": "Llm",
+      "type": "string"
+     },
+     "model": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Model"
+     },
+     "promptVersion": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Promptversion"
+     },
+     "questions": {
+      "items": {
+       "$ref": "#/components/schemas/Question"
+      },
+      "title": "Questions",
+      "type": "array"
+     },
+     "rulesetVersion": {
+      "title": "Rulesetversion",
+      "type": "string"
+     },
+     "runId": {
+      "title": "Runid",
+      "type": "string"
+     },
+     "status": {
+      "enum": [
+       "code_done",
+       "done",
+       "llm_unavailable",
+       "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+     },
+     "summary": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "title": "Summary",
+      "type": "object"
+     }
+    },
+    "required": [
+     "runId",
+     "status",
+     "llm",
+     "rulesetVersion",
+     "contentHash"
+    ],
+    "title": "CheckResult",
+    "type": "object"
+   },
+   "ClausePatch": {
+    "additionalProperties": false,
+    "properties": {
+     "body": {
+      "anyOf": [
+       {
+        "maxLength": 20000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Body"
+     },
+     "clause_no": {
+      "anyOf": [
+       {
+        "maxLength": 40,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Clause No"
+     },
+     "excluded": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Excluded"
+     }
+    },
+    "title": "ClausePatch",
+    "type": "object"
+   },
+   "Context": {
+    "additionalProperties": false,
+    "properties": {
+     "attachments": {
+      "items": {
+       "$ref": "#/components/schemas/Attachment"
+      },
+      "maxItems": 20,
+      "title": "Attachments",
+      "type": "array"
+     },
+     "catalogVersion": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Catalogversion",
+      "type": "string"
+     },
+     "categoryCode": {
+      "maxLength": 10,
+      "title": "Categorycode",
+      "type": "string"
+     },
+     "description": {
+      "default": "",
+      "maxLength": 4000,
+      "title": "Description",
+      "type": "string"
+     },
+     "endAt": {
+      "anyOf": [
+       {
+        "format": "date-time",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Endat"
+     },
+     "flags": {
+      "$ref": "#/components/schemas/Flags"
+     },
+     "shopCode": {
+      "anyOf": [
+       {
+        "maxLength": 50,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Shopcode"
+     },
+     "startAt": {
+      "anyOf": [
+       {
+        "format": "date-time",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Startat"
+     },
+     "unitCode": {
+      "anyOf": [
+       {
+        "maxLength": 50,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Unitcode"
+     },
+     "workType": {
+      "maxLength": 50,
+      "title": "Worktype",
+      "type": "string"
+     }
+    },
+    "required": [
+     "workType",
+     "categoryCode",
+     "catalogVersion"
+    ],
+    "title": "Context",
+    "type": "object"
+   },
+   "DocPatch": {
+    "additionalProperties": false,
+    "properties": {
+     "categories": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Categories"
+     },
+     "meta": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Meta"
+     },
+     "org_codes": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Org Codes"
+     },
+     "work_types": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Work Types"
+     }
+    },
+    "title": "DocPatch",
+    "type": "object"
+   },
+   "EndInfo": {
+    "additionalProperties": false,
+    "properties": {
+     "contentHash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Contenthash",
+      "type": "string"
+     },
+     "endRef": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Endref",
+      "type": "string"
+     },
+     "mode": {
+      "default": "full",
+      "enum": [
+       "full",
+       "additions"
+      ],
+      "title": "Mode",
+      "type": "string"
+     },
+     "snapshotVersion": {
+      "default": 0,
+      "title": "Snapshotversion",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "endRef",
+     "contentHash"
+    ],
+    "title": "EndInfo",
+    "type": "object"
+   },
+   "Finding": {
+    "additionalProperties": false,
+    "properties": {
+     "autofix": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Autofix"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "basis": {
+      "$ref": "#/components/schemas/Basis"
+     },
+     "blocking": {
+      "default": false,
+      "title": "Blocking",
+      "type": "boolean"
+     },
+     "confidence": {
+      "default": 1.0,
+      "title": "Confidence",
+      "type": "number"
+     },
+     "evidence": {
+      "default": "",
+      "title": "Evidence",
+      "type": "string"
+     },
+     "findingId": {
+      "default": "",
+      "title": "Findingid",
+      "type": "string"
+     },
+     "generated": {
+      "default": false,
+      "title": "Generated",
+      "type": "boolean"
+     },
+     "hidden": {
+      "default": false,
+      "title": "Hidden",
+      "type": "boolean"
+     },
+     "kind": {
+      "default": "issue",
+      "enum": [
+       "issue",
+       "question",
+       "autofix",
+       "suggestion"
+      ],
+      "title": "Kind",
+      "type": "string"
+     },
+     "message": {
+      "$ref": "#/components/schemas/Text"
+     },
+     "recommendation": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Recommendation"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "ruleCode": {
+      "title": "Rulecode",
+      "type": "string"
+     },
+     "severity": {
+      "enum": [
+       "critical",
+       "significant",
+       "recommendation",
+       "question"
+      ],
+      "title": "Severity",
+      "type": "string"
+     },
+     "source": {
+      "default": "rules",
+      "enum": [
+       "rules",
+       "ai"
+      ],
+      "title": "Source",
+      "type": "string"
+     },
+     "target": {
+      "$ref": "#/components/schemas/Target"
+     },
+     "title": {
+      "$ref": "#/components/schemas/Text"
+     }
+    },
+    "required": [
+     "ruleCode",
+     "severity",
+     "target",
+     "title",
+     "message"
+    ],
+    "title": "Finding",
+    "type": "object"
+   },
+   "Flags": {
+    "additionalProperties": false,
+    "properties": {
+     "adjacentApproval": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Adjacentapproval"
+     },
+     "contractorStaff": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Contractorstaff"
+     },
+     "fireService": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fireservice"
+     },
+     "gasAirControl": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gasaircontrol"
+     }
+    },
+    "title": "Flags",
+    "type": "object"
+   },
+   "Gate": {
+    "additionalProperties": false,
+    "properties": {
+     "allowed": {
+      "title": "Allowed",
+      "type": "boolean"
+     },
+     "blockers": {
+      "items": {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      "title": "Blockers",
+      "type": "array"
+     }
+    },
+    "required": [
+     "allowed"
+    ],
+    "title": "Gate",
+    "type": "object"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "title": "Detail",
+      "type": "array"
+     }
+    },
+    "title": "HTTPValidationError",
+    "type": "object"
+   },
+   "Measure": {
+    "additionalProperties": false,
+    "properties": {
+     "catalogItemId": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Catalogitemid"
+     },
+     "catalogItemVersion": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Catalogitemversion"
+     },
+     "notApplicable": {
+      "default": false,
+      "title": "Notapplicable",
+      "type": "boolean"
+     },
+     "notApplicableReason": {
+      "anyOf": [
+       {
+        "maxLength": 2000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notapplicablereason"
+     },
+     "origin": {
+      "default": "manual",
+      "enum": [
+       "catalog",
+       "catalog_edited",
+       "manual"
+      ],
+      "title": "Origin",
+      "type": "string"
+     },
+     "rowId": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Rowid",
+      "type": "string"
+     },
+     "section": {
+      "pattern": "^5\\.(?:[1-9]|10)$",
+      "title": "Section",
+      "type": "string"
+     },
+     "text": {
+      "default": "",
+      "maxLength": 2000,
+      "title": "Text",
+      "type": "string"
+     }
+    },
+    "required": [
+     "rowId",
+     "section"
+    ],
+    "title": "Measure",
+    "type": "object"
+   },
+   "Question": {
+    "additionalProperties": false,
+    "properties": {
+     "factorCode": {
+      "title": "Factorcode",
+      "type": "string"
+     },
+     "options": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Options",
+      "type": "array"
+     },
+     "text": {
+      "$ref": "#/components/schemas/Text"
+     }
+    },
+    "required": [
+     "factorCode",
+     "text"
+    ],
+    "title": "Question",
+    "type": "object"
+   },
+   "Recommendation": {
+    "additionalProperties": false,
+    "properties": {
+     "catalogItemIds": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Catalogitemids",
+      "type": "array"
+     },
+     "field": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Field"
+     },
+     "generated": {
+      "default": false,
+      "title": "Generated",
+      "type": "boolean"
+     },
+     "mode": {
+      "enum": [
+       "replace",
+       "append",
+       "set_field",
+       "select_ids",
+       "not_applicable"
+      ],
+      "title": "Mode",
+      "type": "string"
+     },
+     "text": {
+      "$ref": "#/components/schemas/Text"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     }
+    },
+    "required": [
+     "mode"
+    ],
+    "title": "Recommendation",
+    "type": "object"
+   },
+   "RefItem": {
+    "additionalProperties": false,
+    "properties": {
+     "clause_no": {
+      "maxLength": 40,
+      "title": "Clause No",
+      "type": "string"
+     },
+     "doc_code": {
+      "maxLength": 60,
+      "title": "Doc Code",
+      "type": "string"
+     },
+     "rule_code": {
+      "maxLength": 20,
+      "title": "Rule Code",
+      "type": "string"
+     }
+    },
+    "required": [
+     "rule_code",
+     "doc_code",
+     "clause_no"
+    ],
+    "title": "RefItem",
+    "type": "object"
+   },
+   "RefsBody": {
+    "additionalProperties": false,
+    "properties": {
+     "refs": {
+      "items": {
+       "$ref": "#/components/schemas/RefItem"
+      },
+      "maxItems": 2000,
+      "title": "Refs",
+      "type": "array"
+     }
+    },
+    "required": [
+     "refs"
+    ],
+    "title": "RefsBody",
+    "type": "object"
+   },
+   "RequestedBy": {
+    "additionalProperties": false,
+    "properties": {
+     "role": {
+      "maxLength": 50,
+      "title": "Role",
+      "type": "string"
+     },
+     "userRef": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Userref",
+      "type": "string"
+     }
+    },
+    "required": [
+     "userRef",
+     "role"
+    ],
+    "title": "RequestedBy",
+    "type": "object"
+   },
+   "Risk": {
+    "additionalProperties": false,
+    "properties": {
+     "additionalControlIds": {
+      "items": {
+       "type": "integer"
+      },
+      "maxItems": 50,
+      "title": "Additionalcontrolids",
+      "type": "array"
+     },
+     "b1": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "B1"
+     },
+     "b2": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "B2"
+     },
+     "controlResponsibleRoleId": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Controlresponsibleroleid"
+     },
+     "existingControlIds": {
+      "items": {
+       "type": "integer"
+      },
+      "maxItems": 50,
+      "title": "Existingcontrolids",
+      "type": "array"
+     },
+     "harmIds": {
+      "items": {
+       "type": "integer"
+      },
+      "maxItems": 50,
+      "title": "Harmids",
+      "type": "array"
+     },
+     "hazardId": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Hazardid"
+     },
+     "implementWhenId": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Implementwhenid"
+     },
+     "p1": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "P1"
+     },
+     "p2": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "P2"
+     },
+     "r1": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "R1"
+     },
+     "r2": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "R2"
+     },
+     "rowId": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Rowid",
+      "type": "string"
+     },
+     "victimIds": {
+      "items": {
+       "type": "integer"
+      },
+      "maxItems": 50,
+      "title": "Victimids",
+      "type": "array"
+     }
+    },
+    "required": [
+     "rowId"
+    ],
+    "title": "Risk",
+    "type": "object"
+   },
+   "SyncRequest": {
+    "additionalProperties": false,
+    "properties": {
+     "version": {
+      "title": "Version",
+      "type": "string"
+     }
+    },
+    "required": [
+     "version"
+    ],
+    "title": "SyncRequest",
+    "type": "object"
+   },
+   "Target": {
+    "additionalProperties": false,
+    "properties": {
+     "factorCode": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Factorcode"
+     },
+     "field": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Field"
+     },
+     "flag": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Flag"
+     },
+     "rowId": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rowid"
+     },
+     "section": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Section"
+     },
+     "type": {
+      "enum": [
+       "measure",
+       "risk",
+       "risks",
+       "section",
+       "flag",
+       "factor",
+       "description"
+      ],
+      "title": "Type",
+      "type": "string"
+     }
+    },
+    "required": [
+     "type"
+    ],
+    "title": "Target",
+    "type": "object"
+   },
+   "Tenant": {
+    "additionalProperties": false,
+    "properties": {
+     "orgCode": {
+      "maxLength": 20,
+      "minLength": 1,
+      "title": "Orgcode",
+      "type": "string"
+     }
+    },
+    "required": [
+     "orgCode"
+    ],
+    "title": "Tenant",
+    "type": "object"
+   },
+   "Text": {
+    "additionalProperties": false,
+    "properties": {
+     "kk": {
+      "default": "",
+      "title": "Kk",
+      "type": "string"
+     },
+     "ru": {
+      "default": "",
+      "title": "Ru",
+      "type": "string"
+     }
+    },
+    "title": "Text",
+    "type": "object"
+   },
+   "ValidationError": {
+    "properties": {
+     "ctx": {
+      "title": "Context",
+      "type": "object"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "title": "Location",
+      "type": "array"
+     },
+     "msg": {
+      "title": "Message",
+      "type": "string"
+     },
+     "type": {
+      "title": "Error Type",
+      "type": "string"
+     }
+    },
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError",
+    "type": "object"
+   }
+  }
+ },
+ "info": {
+  "title": "AI check of work permit section 2",
+  "version": "1.0.0"
+ },
+ "openapi": "3.1.0",
+ "paths": {
+  "/metrics": {
+   "get": {
+    "operationId": "metrics_metrics_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Metrics"
+   }
+  },
+  "/v1/admin/catalog": {
+   "post": {
+    "operationId": "post_catalog_v1_admin_catalog_post",
+    "parameters": [
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CatalogBody"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "title": "Response Post Catalog V1 Admin Catalog Post",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Post Catalog"
+   }
+  },
+  "/v1/admin/kb/clauses/{clause_id}": {
+   "patch": {
+    "operationId": "patch_clause_v1_admin_kb_clauses__clause_id__patch",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "clause_id",
+      "required": true,
+      "schema": {
+       "title": "Clause Id",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ClausePatch"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "title": "Response Patch Clause V1 Admin Kb Clauses  Clause Id  Patch",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Patch Clause"
+   }
+  },
+  "/v1/admin/kb/documents": {
+   "get": {
+    "operationId": "list_documents_v1_admin_kb_documents_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "org",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Org"
+      }
+     },
+     {
+      "in": "query",
+      "name": "category",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Category"
+      }
+     },
+     {
+      "in": "query",
+      "name": "status",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "title": "Response List Documents V1 Admin Kb Documents Get"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "List Documents"
+   },
+   "post": {
+    "operationId": "upload_document_v1_admin_kb_documents_post",
+    "parameters": [
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_upload_document_v1_admin_kb_documents_post"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "title": "Response Upload Document V1 Admin Kb Documents Post",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Upload Document"
+   }
+  },
+  "/v1/admin/kb/documents/{doc_id}": {
+   "get": {
+    "operationId": "get_document_v1_admin_kb_documents__doc_id__get",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "doc_id",
+      "required": true,
+      "schema": {
+       "title": "Doc Id",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "title": "Response Get Document V1 Admin Kb Documents  Doc Id  Get"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get Document"
+   },
+   "patch": {
+    "operationId": "patch_document_v1_admin_kb_documents__doc_id__patch",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "doc_id",
+      "required": true,
+      "schema": {
+       "title": "Doc Id",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DocPatch"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "title": "Response Patch Document V1 Admin Kb Documents  Doc Id  Patch",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Patch Document"
+   }
+  },
+  "/v1/admin/kb/documents/{doc_id}/activate": {
+   "post": {
+    "operationId": "activate_document_v1_admin_kb_documents__doc_id__activate_post",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "doc_id",
+      "required": true,
+      "schema": {
+       "title": "Doc Id",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "title": "Response Activate Document V1 Admin Kb Documents  Doc Id  Activate Post",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Activate Document"
+   }
+  },
+  "/v1/admin/kb/documents/{doc_id}/diff": {
+   "get": {
+    "operationId": "document_diff_v1_admin_kb_documents__doc_id__diff_get",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "doc_id",
+      "required": true,
+      "schema": {
+       "title": "Doc Id",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "title": "Response Document Diff V1 Admin Kb Documents  Doc Id  Diff Get"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Document Diff"
+   }
+  },
+  "/v1/admin/kb/rule-refs": {
+   "put": {
+    "operationId": "put_rule_refs_v1_admin_kb_rule_refs_put",
+    "parameters": [
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RefsBody"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "integer"
+         },
+         "title": "Response Put Rule Refs V1 Admin Kb Rule Refs Put",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Put Rule Refs"
+   }
+  },
+  "/v1/admin/kb/rule-refs/broken": {
+   "get": {
+    "operationId": "broken_refs_v1_admin_kb_rule_refs_broken_get",
+    "parameters": [
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "title": "Response Broken Refs V1 Admin Kb Rule Refs Broken Get"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Broken Refs"
+   }
+  },
+  "/v1/admin/rulesets": {
+   "post": {
+    "operationId": "post_ruleset_v1_admin_rulesets_post",
+    "parameters": [
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "additionalProperties": true,
+        "title": "Body",
+        "type": "object"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "title": "Response Post Ruleset V1 Admin Rulesets Post",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Post Ruleset"
+   }
+  },
+  "/v1/admin/rulesets/{ruleset_id}/activate": {
+   "post": {
+    "operationId": "activate_ruleset_v1_admin_rulesets__ruleset_id__activate_post",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "ruleset_id",
+      "required": true,
+      "schema": {
+       "title": "Ruleset Id",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "title": "Response Activate Ruleset V1 Admin Rulesets  Ruleset Id  Activate Post",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Activate Ruleset"
+   }
+  },
+  "/v1/catalog/version": {
+   "get": {
+    "operationId": "get_catalog_version_v1_catalog_version_get",
+    "parameters": [
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "title": "Response Get Catalog Version V1 Catalog Version Get",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get Catalog Version"
+   }
+  },
+  "/v1/checks": {
+   "post": {
+    "operationId": "post_checks_v1_checks_post",
+    "parameters": [
+     {
+      "in": "header",
+      "name": "Idempotency-Key",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Idempotency-Key"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CheckRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CheckResult"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Post Checks"
+   }
+  },
+  "/v1/checks/{run_id}": {
+   "get": {
+    "operationId": "get_check_v1_checks__run_id__get",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "run_id",
+      "required": true,
+      "schema": {
+       "title": "Run Id",
+       "type": "string"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CheckResult"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get Check"
+   }
+  },
+  "/v1/checks/{run_id}/answers": {
+   "post": {
+    "operationId": "post_answers_v1_checks__run_id__answers_post",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "run_id",
+      "required": true,
+      "schema": {
+       "title": "Run Id",
+       "type": "string"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnswersRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CheckResult"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Post Answers"
+   }
+  },
+  "/v1/findings/{finding_id}/actions": {
+   "post": {
+    "operationId": "post_action_v1_findings__finding_id__actions_post",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "finding_id",
+      "required": true,
+      "schema": {
+       "title": "Finding Id",
+       "type": "string"
+      }
+     },
+     {
+      "in": "header",
+      "name": "Idempotency-Key",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Idempotency-Key"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ActionRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "title": "Response Post Action V1 Findings  Finding Id  Actions Post",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Post Action"
+   }
+  },
+  "/v1/gate": {
+   "get": {
+    "operationId": "get_gate_v1_gate_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "endRef",
+      "required": true,
+      "schema": {
+       "title": "Endref",
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "contentHash",
+      "required": true,
+      "schema": {
+       "title": "Contenthash",
+       "type": "string"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Gate"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get Gate"
+   }
+  },
+  "/v1/health": {
+   "get": {
+    "operationId": "health_v1_health_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "title": "Response Health V1 Health Get",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Health"
+   }
+  },
+  "/v1/kb/clauses/{code}/{clause_no}": {
+   "get": {
+    "operationId": "get_clause_v1_kb_clauses__code___clause_no__get",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "code",
+      "required": true,
+      "schema": {
+       "title": "Code",
+       "type": "string"
+      }
+     },
+     {
+      "in": "path",
+      "name": "clause_no",
+      "required": true,
+      "schema": {
+       "title": "Clause No",
+       "type": "string"
+      }
+     },
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "title": "Response Get Clause V1 Kb Clauses  Code   Clause No  Get"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get Clause"
+   }
+  },
+  "/v1/ready": {
+   "get": {
+    "operationId": "ready_v1_ready_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "title": "Response Ready V1 Ready Get",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Ready"
+   }
+  },
+  "/v1/sync": {
+   "post": {
+    "operationId": "post_sync_v1_sync_post",
+    "parameters": [
+     {
+      "in": "header",
+      "name": "authorization",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SyncRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "202": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "title": "Response Post Sync V1 Sync Post",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Post Sync"
+   }
+  }
+ }
+}

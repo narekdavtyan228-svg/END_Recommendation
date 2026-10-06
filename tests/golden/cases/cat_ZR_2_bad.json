@@ -1,0 +1,202 @@
+{
+ "id": "cat_ZR_2_bad",
+ "title": "земляные: плохой ЭНД",
+ "params": true,
+ "request": {
+  "schemaVersion": "1.0",
+  "tenant": {
+   "orgCode": "OMG"
+  },
+  "end": {
+   "endRef": "end_golden",
+   "snapshotVersion": 1,
+   "contentHash": "sha256:faf25ee378ea9566d2b1eb96c45e3f1b85ef25cb795b3d3c8f69e369722e7a01",
+   "mode": "full"
+  },
+  "context": {
+   "workType": "RPO",
+   "categoryCode": "ZR",
+   "unitCode": "NGDU-2",
+   "shopCode": null,
+   "description": "Плановые работы на скважине",
+   "startAt": "2026-09-18T10:41:00+05:00",
+   "endAt": "2026-09-19T10:41:00+05:00",
+   "flags": {
+    "adjacentApproval": false,
+    "gasAirControl": true,
+    "fireService": true,
+    "contractorStaff": false
+   },
+   "attachments": [],
+   "catalogVersion": "golden-cat-1"
+  },
+  "measures": [
+   {
+    "rowId": "m4",
+    "section": "5.5",
+    "text": "Тест",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m8",
+    "section": "5.9",
+    "text": "Определить и довести до бригады безопасные маршруты движения к месту проведения работ",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "x4",
+    "section": "5.4",
+    "text": "Выставить сигнальную ленту по периметру выемки",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   }
+  ],
+  "risks": [
+   {
+    "rowId": "r0",
+    "hazardId": 100,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 4,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   },
+   {
+    "rowId": "r1",
+    "hazardId": 102,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 3,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   }
+  ],
+  "factorAnswers": {
+   "F01": "no",
+   "F02": "no",
+   "F03": "yes",
+   "F04": "no",
+   "F05": "no",
+   "F06": "no",
+   "F07": "no",
+   "F08": "no",
+   "F09": "no",
+   "F10": "no",
+   "F11": "no",
+   "F12": "no",
+   "F14": "no",
+   "F16": "no",
+   "F19": "no",
+   "F20": "no",
+   "F25": "no",
+   "F27": "yes",
+   "F28": "no",
+   "F29": "no",
+   "F31": "no",
+   "F32": "no",
+   "F33": "no",
+   "F34": "no",
+   "F35": "no",
+   "F36": "no",
+   "F38": "no"
+  },
+  "locale": "ru",
+  "requestedBy": {
+   "userRef": "u_golden",
+   "role": "issuer"
+  }
+ },
+ "expected": [
+  {
+   "rule": "S02",
+   "target": {
+    "type": "measure",
+    "section": "5.5",
+    "rowId": "m4"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "MX",
+   "target": {
+    "type": "section",
+    "section": "5.7"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "MX",
+   "target": {
+    "type": "section",
+    "section": "5.2"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "N12",
+   "target": {
+    "type": "flag",
+    "flag": "adjacentApproval"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "ZR-02",
+   "target": {
+    "type": "description"
+   },
+   "severity": "significant"
+  },
+  {
+   "rule": "ZR-04",
+   "target": {
+    "type": "section",
+    "section": "5.4"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "RA13",
+   "target": {
+    "type": "risks",
+    "field": "Повреждение подземных коммуникаций"
+   },
+   "severity": "significant"
+  },
+  {
+   "rule": "RA13",
+   "target": {
+    "type": "risks",
+    "field": "Загазованность выемки"
+   },
+   "severity": "significant"
+  }
+ ]
+}

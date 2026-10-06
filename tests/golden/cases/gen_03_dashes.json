@@ -1,0 +1,169 @@
+{
+ "id": "gen_03_dashes",
+ "title": "прочерки: ядро и условный пункт",
+ "params": true,
+ "request": {
+  "schemaVersion": "1.0",
+  "tenant": {
+   "orgCode": "OMG"
+  },
+  "end": {
+   "endRef": "end_golden",
+   "snapshotVersion": 1,
+   "contentHash": "sha256:f6a1dbaa229a962f5f289601d9ccd8ac0b7718c4a3ed7f063016d35976cba043",
+   "mode": "full"
+  },
+  "context": {
+   "workType": "RPO",
+   "categoryCode": "ZR",
+   "unitCode": "NGDU-2",
+   "shopCode": null,
+   "description": "Плановые работы на скважине",
+   "startAt": "2026-09-18T10:41:00+05:00",
+   "endAt": "2026-09-19T10:41:00+05:00",
+   "flags": {
+    "adjacentApproval": true,
+    "gasAirControl": true,
+    "fireService": true,
+    "contractorStaff": false
+   },
+   "attachments": [
+    {
+     "kind": "scheme",
+     "count": 1
+    }
+   ],
+   "catalogVersion": "golden-cat-1"
+  },
+  "measures": [
+   {
+    "rowId": "m4",
+    "section": "5.5",
+    "text": "—",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m6",
+    "section": "5.7",
+    "text": "Предупредить персонал смежных участков о начале работ и согласовать порядок взаимодействия",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "m8",
+    "section": "5.9",
+    "text": "не требуется",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   },
+   {
+    "rowId": "x4",
+    "section": "5.4",
+    "text": "-",
+    "catalogItemId": null,
+    "origin": "manual",
+    "notApplicable": false
+   }
+  ],
+  "risks": [
+   {
+    "rowId": "r0",
+    "hazardId": 100,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 4,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   },
+   {
+    "rowId": "r1",
+    "hazardId": 102,
+    "victimIds": [
+     1
+    ],
+    "harmIds": [
+     1
+    ],
+    "existingControlIds": [
+     1
+    ],
+    "b1": 3,
+    "p1": 1,
+    "additionalControlIds": [],
+    "b2": null,
+    "p2": null,
+    "controlResponsibleRoleId": null,
+    "implementWhenId": null
+   }
+  ],
+  "factorAnswers": {
+   "F01": "no",
+   "F02": "no",
+   "F03": "no",
+   "F04": "no",
+   "F05": "no",
+   "F06": "no",
+   "F07": "no",
+   "F08": "no",
+   "F09": "no",
+   "F10": "no",
+   "F11": "no",
+   "F12": "no",
+   "F14": "no",
+   "F16": "no",
+   "F19": "no",
+   "F20": "no",
+   "F25": "no",
+   "F27": "no",
+   "F28": "no",
+   "F29": "no",
+   "F31": "no",
+   "F32": "no",
+   "F33": "no",
+   "F34": "no",
+   "F35": "no",
+   "F36": "no",
+   "F38": "no"
+  },
+  "locale": "ru",
+  "requestedBy": {
+   "userRef": "u_golden",
+   "role": "issuer"
+  }
+ },
+ "expected": [
+  {
+   "rule": "N06",
+   "target": {
+    "type": "measure",
+    "section": "5.5",
+    "rowId": "m4"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "N06",
+   "target": {
+    "type": "measure",
+    "section": "5.9",
+    "rowId": "m8"
+   },
+   "severity": "critical"
+  }
+ ]
+}

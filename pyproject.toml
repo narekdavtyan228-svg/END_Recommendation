@@ -1,0 +1,58 @@
+[project]
+name = "aicheck"
+version = "1.0.0"
+description = "Microservice for AI-assisted check of section 2 of a work permit (END)"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi", "uvicorn", "pydantic>=2", "psycopg[binary]>=3.2", "sqlalchemy>=2", "alembic",
+  "httpx", "rapidfuzz", "pyjwt[crypto]", "prometheus-client", "pypdf", "python-docx",
+  "python-multipart",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-xdist", "pytest-cov", "hypothesis", "ruff", "mypy", "bandit", "pip-audit", "reportlab"]
+
+[tool.setuptools.packages.find]
+include = ["aicheck*"]
+
+[tool.setuptools.package-data]
+aicheck = ["rules/data/*.json", "llm/prompts/*.txt", "db/migrations/versions/*.py", "db/migrations/*.mako"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "C4", "SIM", "PLC0415", "RET"]
+ignore = ["S101", "S608", "E501", "RET504", "RET505"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "PLC0415"]
+"aicheck/db/migrations/*" = ["S608", "I"]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["aicheck.engine.*", "aicheck.contracts.*", "aicheck.llm.*"]
+strict = true
+disallow_untyped_decorators = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -p no:cacheprovider"
+filterwarnings = ["ignore:Using .httpx. with"]
+markers = [
+  "stage0", "stage1", "stage2", "stage3", "stage4", "stage5", "stage6", "stage7",
+  "serial_db: needs COMMIT, uses the shared per-worker database",
+  "perf: load test, run separately",
+]
+
+[tool.coverage.run]
+source = ["aicheck"]
+omit = ["aicheck/db/migrations/*"]
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]
