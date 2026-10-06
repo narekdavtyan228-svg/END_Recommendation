@@ -10,7 +10,7 @@ from aicheck.engine.factors import factor_state
 from aicheck.engine.findings import make_finding, row_target
 from aicheck.engine.matrix import entries, entry_factors, required_state
 from aicheck.engine.normalize import find_stem, short, stem_regex
-from aicheck.rules.loader import FACTOR_CODE, MarkerGroup
+from aicheck.rules.loader import MarkerGroup
 
 Params = dict[str, Any]
 # Flag required by category (rule N12 text): gas control for GO/ZP, neighbour approval for ZR.
@@ -19,7 +19,6 @@ FLAG_RULES = {
     "ZP": ("gasAirControl", "Контроль газо-воздушной среды"),
     "ZR": ("adjacentApproval", "Согласование со смежными цехами/участками"),
 }
-YES_NO = {True: "Да", False: "Нет", None: "Нет"}
 
 
 def _n(ctx: CheckContext, code: str) -> dict[str, Any]:
@@ -53,7 +52,7 @@ def check_n01(ctx: CheckContext, params: Params) -> list[Finding]:
             if group.handled_by or _group_allowed(ctx, group) or _absent_in_profile(ctx, group):
                 continue
             hit = group_hit(ctx, row, group)
-            if hit:
+            if hit and not _from_own_catalog(ctx, row, hit):
                 values = {
                     "short": short(row.text),
                     "group": group.name,
@@ -62,6 +61,14 @@ def check_n01(ctx: CheckContext, params: Params) -> list[Finding]:
                 out.append(make_finding(ctx, _n(ctx, "N01"), row_target(row), values, evidence=hit))
                 break
     return out
+
+
+def _from_own_catalog(ctx: CheckContext, row: Row, hit: str) -> bool:
+    """A marker that comes from a catalog record of the request category is not a foreign one."""
+    item = row.item
+    if not item or item["category"] != ctx.category_code:
+        return False
+    return hit.lower() in str(item["text_ru"]).lower()
 
 
 def _factor_question(ctx: CheckContext, code: str) -> str:
@@ -103,27 +110,31 @@ def _marker_patterns(text: str) -> list[re.Pattern[str]]:
     return patterns
 
 
-def _in_warm(start: date, end: date, cfg: dict[str, Any]) -> bool | None:
-    """True: whole interval is in the warm period; False: wholly outside; None: mixed."""
-    warm_from, warm_to = cfg["warm_from"], cfg["warm_to"]
+def _in_period(day: date, period: dict[str, str]) -> bool:
+    """`from`/`to` are MM-DD; a period may wrap over the new year (cold: 11-15 .. 03-15)."""
+    mark = f"{day.month:02d}-{day.day:02d}"
+    start, stop = period["from"], period["to"]
+    return start <= mark <= stop if start <= stop else mark >= start or mark <= stop
 
-    def inside(d: date) -> bool:
-        return bool(warm_from <= f"{d.month:02d}-{d.day:02d}" <= warm_to)
 
-    flags = {inside(start), inside(end)}
-    return flags.pop() if len(flags) == 1 else None
+def _season(start: date, end: date, cfg: dict[str, Any]) -> str | None:
+    """`warm` or `cold` when both dates of the work lie inside one period, else None."""
+    for name in ("warm", "cold"):
+        if _in_period(start, cfg[name]) and _in_period(end, cfg[name]):
+            return name
+    return None
 
 
 def check_n03(ctx: CheckContext, params: Params) -> list[Finding]:
     cfg = ctx.ruleset.config("P09")
     start, end = ctx.request.context.startAt, ctx.request.context.endAt
     if not cfg or not start or not end:
-        return []  # the warm period is an OMG parameter that has not been set
-    warm = _in_warm(start.date(), end.date(), cfg)
-    if warm is None:
-        return []
+        return []  # the season periods are an OMG parameter
+    season_now = _season(start.date(), end.date(), cfg)
+    if season_now is None:
+        return []  # transition dates: the rule stays silent
     cold, heat = _season_markers(str(params.get("detect", "")))
-    patterns, season = (cold, "низких температур") if warm else (heat, "жары")
+    patterns, season = (cold, "низких температур") if season_now == "warm" else (heat, "жары")
     dates = f"{start:%d.%m.%Y}–{end:%d.%m.%Y}"
     out = []
     for row in (r for r in ctx.rows if r.live):
@@ -204,25 +215,30 @@ def check_n12(ctx: CheckContext, params: Params) -> list[Finding]:
     rule = FLAG_RULES.get(ctx.category_code)
     out = []
     if rule and getattr(flags, rule[0]) is not True:
-        target = Target(type="flag", flag=rule[0])
+        target = Target(type="flag", field=rule[0])
         values = {"category": ctx.category_name, "flag": rule[1], "value": "Да"}
         out.append(make_finding(ctx, params, target, values))
-    cfg = ctx.ruleset.config("P11")
-    wrong_fire = (
-        ctx.category_code == "OG"
-        and cfg is not None
-        and "fire_service" in cfg
-        and flags.fireService is not bool(cfg["fire_service"])
-    )
-    if wrong_fire and cfg:
-        target = Target(type="flag", flag="fireService")
-        values = {
-            "category": ctx.category_name,
-            "flag": "Противопожарная служба",
-            "value": YES_NO[bool(cfg["fire_service"])],
-        }
-        out.append(make_finding(ctx, params, target, values))
+    out.extend(_fire_service(ctx, params))
     return out
+
+
+def fire_service_required(ctx: CheckContext) -> bool:
+    """P11: for hot work the fire service flag must be «yes» when a listed factor is «yes»."""
+    cfg = ctx.ruleset.config("P11")
+    if not cfg or ctx.category_code != cfg["category"]:
+        return False
+    return any(ctx.factor(f) == "yes" for f in cfg["when_any_factor_yes"])
+
+
+def _fire_service(ctx: CheckContext, params: Params) -> list[Finding]:
+    cfg = ctx.ruleset.config("P11")
+    if not (cfg and fire_service_required(ctx)):
+        return []
+    if getattr(ctx.request.context.flags, cfg["flag"]) is bool(cfg["required_value"]):
+        return []
+    values = {"category": ctx.category_name, "flag": "Противопожарная служба", "value": "Да"}
+    target = Target(type="flag", field=cfg["flag"])
+    return [make_finding(ctx, params, target, values, severity=cfg["severity"])]
 
 
 def open_factors(ctx: CheckContext) -> dict[str, bool]:
@@ -237,18 +253,13 @@ def open_factors(ctx: CheckContext) -> dict[str, bool]:
         ):
             for code in (c for c in codes if ctx.factor(c) == "unknown"):
                 result[code] = result.get(code, False) or entry["severity_if_missing"] == "Критично"
-    for hazard in ctx.ruleset.hazards:
-        codes = [c for c in _hazard_factors(hazard) if hazard["category"] == ctx.category_name]
+    for hazard in ctx.catalog.hazards_of(ctx.category_code):
+        codes = hazard["factors"] if hazard["required"] == "factor" else []
         if codes and factor_state(codes, ctx.factors) == "unknown":
             for code in (c for c in codes if ctx.factor(c) == "unknown"):
-                result[code] = (
-                    result.get(code, False) or hazard["severity_if_missing"] == "Критично"
-                )
+                critical = hazard["severity_if_missing"] == "critical"
+                result[code] = result.get(code, False) or critical
     return result
-
-
-def _hazard_factors(hazard: dict[str, Any]) -> list[str]:
-    return FACTOR_CODE.findall(str(hazard.get("required_when", "")))
 
 
 def check_n14(ctx: CheckContext, params: Params) -> list[Finding]:
@@ -260,4 +271,34 @@ def check_n14(ctx: CheckContext, params: Params) -> list[Finding]:
             ctx, params, target, {"factor_question": question}, kind="question", blocking=blocking
         )
         out.append(finding.model_copy(update={"title": Text(ru=question)}))
+    return out
+
+
+# Flag -> stems of text that presumes the flag is «yes» (rule N13: the flag says «no», the text does the work).
+FLAG_TEXT = {
+    "gasAirControl": (
+        ("анализ воздух", "анализ воздушн", "газоанализ", "газовый анализ", "газовый контроль"),
+        "Контроль газо-воздушной среды",
+    ),
+    "adjacentApproval": (
+        ("лэп", "ВЛ ", "линию электропередач", "линии электропередач"),
+        "Согласование со смежными цехами/участками",
+    ),
+}
+
+
+def check_n13(ctx: CheckContext, params: Params) -> list[Finding]:
+    """Flag = «no», but a measure in the text works for that flag."""
+    out = []
+    for flag, (stems, title) in FLAG_TEXT.items():
+        if getattr(ctx.request.context.flags, flag) is True:
+            continue
+        for row in (r for r in ctx.rows if r.live):
+            hit = find_stem(row.text, stems)
+            if hit:
+                values = {"flag": title, "value": "Нет", "p": row.section, "short": short(row.text)}
+                out.append(
+                    make_finding(ctx, params, Target(type="flag", field=flag), values, evidence=hit)
+                )
+                break
     return out

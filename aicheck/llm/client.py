@@ -83,13 +83,20 @@ class LlmClient:
         except (httpx.HTTPError, KeyError, IndexError, ValueError) as exc:
             raise LlmUnavailable(f"gateway call failed: {type(exc).__name__}") from None
 
-    def ask(self, system: str, user: str, model_cls: type[M], model: str | None = None) -> M:
+    def ask(
+        self,
+        system: str,
+        user: str,
+        model_cls: type[M],
+        model: str | None = None,
+        schema: dict[str, Any] | None = None,
+    ) -> M:
         """One call with one retry (network, 5xx or invalid JSON), same input both times."""
         last: Exception | None = None
         for attempt in (1, 2):
             started = time.perf_counter()
             try:
-                content = self.chat(system, user, model, model_cls.model_json_schema())
+                content = self.chat(system, user, model, schema or model_cls.model_json_schema())
                 answer = model_cls.model_validate(extract_json(content))
                 metrics.LLM_CALLS.labels(outcome="ok").inc()
                 metrics.LLM_LATENCY.observe(time.perf_counter() - started)

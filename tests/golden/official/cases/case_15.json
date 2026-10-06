@@ -1,0 +1,182 @@
+{
+  "id": "case_15",
+  "title": "Газоопасные: не оценена опасность «Отравление»",
+  "mode": "code_only",
+  "llm_scenario": "ok",
+  "request": {
+    "schemaVersion": "1.0",
+    "tenant": {
+      "orgCode": "OMG"
+    },
+    "end": {
+      "endRef": "END-TEST-9665",
+      "snapshotVersion": 1,
+      "contentHash": null,
+      "mode": "full"
+    },
+    "context": {
+      "workType": "RPO",
+      "categoryCode": "GO",
+      "unitCode": "NGDU-2",
+      "shopCode": "CPPD",
+      "description": "Замена задвижки на газопроводе ГЗУ-12",
+      "startAt": "2026-09-18T10:41:00+05:00",
+      "endAt": "2026-09-21T00:00:00+05:00",
+      "flags": {
+        "adjacentApproval": false,
+        "gasAirControl": true,
+        "fireService": false,
+        "contractorStaff": false
+      },
+      "attachments": [],
+      "catalogVersion": "test-cat-1"
+    },
+    "measures": [
+      {
+        "rowId": "m-5.1-a",
+        "section": "5.1",
+        "text": "Остановить ГЗУ.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.2-a",
+        "section": "5.2",
+        "text": "Сбросить давление, продуть участок.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.3-a",
+        "section": "5.3",
+        "text": "Установить заглушки.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.4-a",
+        "section": "5.4",
+        "text": "Анализ воздуха до начала и каждые 30 минут; место: ГЗУ; прибор: газоанализатор; результат: в наряд-допуск.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.5-a",
+        "section": "5.5",
+        "text": "Оградить, вывесить знаки «Газоопасные работы».",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.6-a",
+        "section": "5.6",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.7-a",
+        "section": "5.7",
+        "text": "Предупредить оператора ЦДНГ.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.8-a",
+        "section": "5.8",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.9-a",
+        "section": "5.9",
+        "text": "Маршрут эвакуации с наветренной стороны.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.10-a",
+        "section": "5.10",
+        "text": "СИЗОД, наблюдающий, радиосвязь, искробезопасный инструмент.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      }
+    ],
+    "risks": [
+      {
+        "rowId": "r1",
+        "hazardId": 2020,
+        "victimIds": [
+          3002
+        ],
+        "harmIds": [
+          3518
+        ],
+        "existingControlIds": [
+          4055,
+          4056
+        ],
+        "b1": 5,
+        "p1": 2,
+        "additionalControlIds": [
+          4057
+        ],
+        "b2": 5,
+        "p2": 1,
+        "controlResponsibleRoleId": 1,
+        "implementWhenId": 1
+      }
+    ],
+    "factorAnswers": {},
+    "locale": "ru",
+    "requestedBy": {
+      "userRef": "u_test_issuer",
+      "role": "issuer"
+    }
+  },
+  "steps": null,
+  "expect": {
+    "must_include": [
+      {
+        "rule_code": "RA12",
+        "severity": "critical",
+        "target": {
+          "type": "risk"
+        },
+        "hazard_name": "Отравление (H2S, углеводороды)"
+      }
+    ]
+  },
+  "notes": ""
+}

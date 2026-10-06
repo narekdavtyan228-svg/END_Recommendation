@@ -11,7 +11,7 @@ from typing import Any
 from aicheck.contracts import Finding, Target
 from aicheck.engine.context import CheckContext, Row
 from aicheck.engine.findings import make_finding, row_target
-from aicheck.engine.inapplicable import YES_NO, check_n12
+from aicheck.engine.inapplicable import check_n12, fire_service_required
 from aicheck.engine.normalize import find_stem, short
 
 Params = dict[str, Any]
@@ -71,7 +71,7 @@ def check_og03(ctx: CheckContext, params: Params) -> list[Finding]:
 def check_gp01(ctx: CheckContext, params: Params) -> list[Finding]:
     if ctx.factor("F02") != "yes" or ctx.request.context.flags.adjacentApproval is True:
         return []
-    target = Target(type="flag", flag="adjacentApproval")
+    target = Target(type="flag", field="adjacentApproval")
     return [make_finding(ctx, _rule(ctx, "GP-01"), target)]
 
 
@@ -114,14 +114,12 @@ def check_og04(ctx: CheckContext, params: Params) -> list[Finding]:
 
 def check_og05(ctx: CheckContext, params: Params) -> list[Finding]:
     cfg = ctx.ruleset.config("P11")
-    if not cfg or "fire_service" not in cfg:
+    if not (cfg and fire_service_required(ctx)):
         return []
-    if ctx.request.context.flags.fireService is bool(cfg["fire_service"]):
+    if getattr(ctx.request.context.flags, cfg["flag"]) is bool(cfg["required_value"]):
         return []
-    target = Target(type="flag", flag="fireService")
-    return [
-        make_finding(ctx, _rule(ctx, "OG-05"), target, {"value": YES_NO[bool(cfg["fire_service"])]})
-    ]
+    target = Target(type="flag", field=cfg["flag"])
+    return [make_finding(ctx, _rule(ctx, "OG-05"), target, severity=cfg["severity"])]
 
 
 def check_go02(ctx: CheckContext, params: Params) -> list[Finding]:
@@ -214,3 +212,26 @@ def check_vs08(ctx: CheckContext, params: Params) -> list[Finding]:
     if _any(rows, ("независим",)) and _any(rows, ("страх",)):
         return []
     return [make_finding(ctx, _rule(ctx, "VS-08"), Target(type="description"))]
+
+
+def _absent(ctx: CheckContext, code: str, stems: tuple[str, ...]) -> list[Finding]:
+    """The rule wants some content anywhere in section 5; none of the keywords is there."""
+    if _any(_live(ctx), stems):
+        return []
+    return [make_finding(ctx, _rule(ctx, code), Target(type="description"))]
+
+
+def check_og01(ctx: CheckContext, params: Params) -> list[Finding]:
+    """Hot work: distance from flammables and explosives, unless F34 says there are none near."""
+    if ctx.factor("F34") == "no":
+        return []
+    return _absent(ctx, "OG-01", ("лвж", "взрывчат", "легковоспламен", "горюч", "50 м"))
+
+
+def check_og02(ctx: CheckContext, params: Params) -> list[Finding]:
+    return _absent(ctx, "OG-02", ("огнетушител", "пожаротуш", "пожарн", "гидрант"))
+
+
+def check_vs02(ctx: CheckContext, params: Params) -> list[Finding]:
+    """Stop conditions: visibility, precipitation, thunderstorm, wind."""
+    return _absent(ctx, "VS-02", ("ветер", "ветр", "гроз", "осадк", "видимост"))

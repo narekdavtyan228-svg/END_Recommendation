@@ -57,7 +57,11 @@ def has_markup(ctx: CheckContext, risk: Risk) -> bool:
     hazard = ctx.catalog.hazards.get(risk.hazardId) if risk.hazardId is not None else None
     if not hazard:
         return False
-    return bool(hazard["victim_ids"] and hazard["harm_ids"] and hazard["control_ids"])
+    return bool(
+        hazard["victim_ids"]
+        and hazard["harm_ids"]
+        and (hazard["typical_existing_control_ids"] or hazard["typical_additional_control_ids"])
+    )
 
 
 def build_residue(ctx: CheckContext, findings: list[Finding]) -> Residue:

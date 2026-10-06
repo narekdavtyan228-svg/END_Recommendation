@@ -55,7 +55,7 @@ def test_zr07_zp06_go05_are_delegated_to_ra12_and_ra13() -> None:
 def test_gp01_overhead_line_needs_flag() -> None:
     f = run([], category="GP", answers={"F02": "yes"}, flags={"adjacentApproval": False})
     g = by_rule(f, "GP-01")
-    assert g and g[0].target.flag == "adjacentApproval"
+    assert g and g[0].target.field == "adjacentApproval"
     assert g[0].severity == "significant"  # basis "сверить пункт" caps the severity
     assert not has(run([], category="GP", answers={"F02": "yes"}), "GP-01")
 
@@ -109,9 +109,18 @@ def test_og04_permit_for_gas_hazardous_work() -> None:
 
 
 def test_og05_follows_the_p11_parameter() -> None:
-    assert not has(run([], category="OG", flags={"fireService": False}), "OG-05")
-    f = run([], category="OG", params=True, flags={"fireService": False})
-    assert has(f, "N12") and not has(f, "OG-05")  # reported once, as N12
+    flags = {"fireService": False}
+    assert not has(
+        run([], category="OG", flags=flags, answers={"F03": "yes"}), "N12"
+    )  # P11 is not set
+    f = run([], category="OG", params=True, flags=flags, answers={"F03": "yes"})
+    n12 = by_rule(f, "N12")
+    assert n12 and n12[0].severity == "significant" and not has(f, "OG-05")  # reported once, as N12
+    assert not has(run([], category="OG", params=True, flags=flags, answers={"F03": "no"}), "N12")
+    assert not has(
+        run([], category="OG", params=True, flags={"fireService": True}, answers={"F31": "yes"}),
+        "N12",
+    )
 
 
 def test_go02_template_of_5_4() -> None:

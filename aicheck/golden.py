@@ -25,9 +25,13 @@ def finding_key(rule: str, target: dict[str, Any], severity: str) -> Key:
     return (rule, json.dumps(clean, sort_keys=True, ensure_ascii=False), severity)
 
 
+def _target_of(f: Finding) -> dict[str, Any]:
+    return f.target.model_dump(exclude_none=True)
+
+
 def _keys(findings: list[Finding]) -> set[Key]:
     return {
-        finding_key(f.ruleCode, f.target.model_dump(exclude_none=True), f.severity)
+        finding_key(f.ruleCode, _target_of(f), f.severity)
         for f in findings
         if not f.hidden and f.kind != "suggestion"
     }
@@ -43,7 +47,7 @@ def load_ruleset(golden_dir: Path, with_params: bool) -> Ruleset:
         params = json.loads((golden_dir / "params.json").read_text(encoding="utf-8"))
         for param in raw["parameters"]:
             if param["code"] in params:
-                param["config"] = params[param["code"]]
+                param["data"] = params[param["code"]]
     return parse_ruleset(json.dumps(raw, ensure_ascii=False))
 
 
@@ -153,7 +157,7 @@ def llm_pass(
         started = time.perf_counter()
         stats["calls"] += 1
         try:
-            answer = client.ask(system, user, LlmAnswer, model)
+            answer = client.ask(system, user, LlmAnswer, model, payload.output_schema())
         except (LlmUnavailable, LlmInvalid):
             stats["times"].append(time.perf_counter() - started)
             continue

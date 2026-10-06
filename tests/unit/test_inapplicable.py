@@ -120,14 +120,16 @@ def test_n11_foreign_norms() -> None:
 def test_n12_flag_must_match_category() -> None:
     f = run([m("5.1", "Остановить технику")], category="GO", **{"flags": NO_FLAGS})
     n12 = by_rule(f, "N12")
-    assert n12 and n12[0].severity == "critical" and n12[0].target.flag == "gasAirControl"
+    assert n12 and n12[0].severity == "critical" and n12[0].target.field == "gasAirControl"
     assert not has(run([m("5.1", "Остановить технику")], category="GO"), "N12")
 
 
 def test_n12_earthworks_need_neighbour_approval_and_fire_service_param() -> None:
     assert has(run([], category="ZR", flags=NO_FLAGS), "N12")
-    assert has(run([], category="OG", params=True, flags=NO_FLAGS), "N12")
-    assert not has(run([], category="OG", params=False, flags=NO_FLAGS), "N12")
+    assert has(run([], category="OG", params=True, flags=NO_FLAGS, answers={"F34": "yes"}), "N12")
+    assert not has(
+        run([], category="OG", params=False, flags=NO_FLAGS, answers={"F34": "yes"}), "N12"
+    )
 
 
 def test_n14_unknown_conditional_factor_is_a_question() -> None:

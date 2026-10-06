@@ -5,7 +5,7 @@ import json
 import sys
 from pathlib import Path
 
-from aicheck import golden
+from aicheck import acceptance, golden
 from aicheck.api.app import create_app
 from aicheck.config import load_settings
 from aicheck.db import kb_queries, migrate, queries
@@ -52,9 +52,22 @@ def cmd_import_rules(args: argparse.Namespace) -> int:
 
 
 def cmd_run_golden(args: argparse.Namespace) -> int:
+    """Own golden set plus the acceptance cases of the specification (code-only part)."""
     report = golden.run(Path(args.cases), Path(args.report))
+    official = Path(args.cases).parent / "official"
+    failed: dict[str, list[str]] = {}
+    if official.is_dir():
+        results = acceptance.run_code_only(official)
+        failed = {k: v for k, v in results.items() if v}
+        lines = [
+            f"\n## Acceptance cases (code stage): {len(results) - len(failed)}/{len(results)} pass\n"
+        ]
+        lines += [f"- {case}: {', '.join(found)}" for case, found in failed.items()]
+        with Path(args.report).open("a", encoding="utf-8") as out:
+            out.write("\n".join(lines) + "\n")
+        say(f"acceptance: {len(results) - len(failed)}/{len(results)} code-only cases pass")
     say(report["summary"])
-    return 0 if report["ok"] else 1
+    return 0 if report["ok"] and not failed else 1
 
 
 def cmd_compare_models(args: argparse.Namespace) -> int:

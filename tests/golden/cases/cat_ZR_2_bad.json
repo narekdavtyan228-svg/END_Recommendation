@@ -163,7 +163,7 @@
    "rule": "N12",
    "target": {
     "type": "flag",
-    "flag": "adjacentApproval"
+    "field": "adjacentApproval"
    },
    "severity": "critical"
   },
@@ -185,7 +185,7 @@
   {
    "rule": "RA13",
    "target": {
-    "type": "risks",
+    "type": "risk",
     "field": "Повреждение подземных коммуникаций"
    },
    "severity": "significant"
@@ -193,7 +193,7 @@
   {
    "rule": "RA13",
    "target": {
-    "type": "risks",
+    "type": "risk",
     "field": "Загазованность выемки"
    },
    "severity": "significant"

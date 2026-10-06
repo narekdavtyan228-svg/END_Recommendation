@@ -17,6 +17,7 @@ BODY_KEYS = (
     "basis",
     "autofix",
     "blocking",
+    "hazardName",
     "hidden",
 )
 

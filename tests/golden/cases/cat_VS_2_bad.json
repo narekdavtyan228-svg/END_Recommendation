@@ -199,6 +199,13 @@
     "type": "description"
    },
    "severity": "significant"
+  },
+  {
+   "rule": "VS-02",
+   "target": {
+    "type": "description"
+   },
+   "severity": "significant"
   }
  ]
 }

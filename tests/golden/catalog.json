@@ -1,15 +1,17 @@
 {
  "version": "golden-cat-1",
+ "orgCode": "OMG",
  "hints": {
   "5.4": "Взять пробу воздушной среды"
  },
  "hazards": [
   {
    "id": 100,
+   "category": "ZR",
+   "required": "always",
    "name": "Обрушение грунта стенок выемки",
-   "categories": [
-    "ZR"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -18,19 +20,30 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.6",
+    "5.10"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 101,
+   "category": "ZR",
+   "required": "factor",
    "name": "Повреждение подземных коммуникаций",
-   "categories": [
-    "ZR"
+   "factors": [
+    "F27"
    ],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -39,19 +52,28 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.2",
+    "5.7"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 102,
+   "category": "ZR",
+   "required": "always",
    "name": "Падение в выемку",
-   "categories": [
-    "ZR"
-   ],
+   "factors": [],
+   "min_severity_level": "medium",
    "victim_ids": [
     1,
     2
@@ -60,19 +82,29 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.5"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 103,
+   "category": "ZR",
+   "required": "factor",
    "name": "Загазованность выемки",
-   "categories": [
-    "ZR"
+   "factors": [
+    "F03"
    ],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -81,19 +113,29 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.4"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 104,
+   "category": "ZR",
+   "required": "factor",
    "name": "Наезд / удар техникой",
-   "categories": [
-    "ZR"
+   "factors": [
+    "F29"
    ],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -102,19 +144,28 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.1",
+    "5.9"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 105,
+   "category": "GP",
+   "required": "always",
    "name": "Падение груза",
-   "categories": [
-    "GP"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -123,19 +174,28 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.5",
+    "5.10"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 106,
+   "category": "GP",
+   "required": "always",
    "name": "Опрокидывание ГПМ",
-   "categories": [
-    "GP"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -144,19 +204,29 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.3"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 107,
+   "category": "GP",
+   "required": "factor",
    "name": "Поражение током при приближении к ВЛ",
-   "categories": [
-    "GP"
+   "factors": [
+    "F02"
    ],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -165,19 +235,27 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.2"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 108,
+   "category": "GP",
+   "required": "always",
    "name": "Защемление, удар грузом",
-   "categories": [
-    "GP"
-   ],
+   "factors": [],
+   "min_severity_level": "medium",
    "victim_ids": [
     1,
     2
@@ -186,19 +264,27 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.5"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 109,
+   "category": "GP",
+   "required": "always",
    "name": "Нарушение связи и сигнализации",
-   "categories": [
-    "GP"
-   ],
+   "factors": [],
+   "min_severity_level": "medium",
    "victim_ids": [
     1,
     2
@@ -207,19 +293,27 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.10"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 110,
+   "category": "ZP",
+   "required": "always",
    "name": "Отравление / удушье",
-   "categories": [
-    "ZP"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -228,19 +322,28 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.4",
+    "5.10"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 111,
+   "category": "ZP",
+   "required": "always",
    "name": "Взрыв / пожар внутри",
-   "categories": [
-    "ZP"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -249,19 +352,29 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.2",
+    "5.3",
+    "5.4"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 112,
+   "category": "ZP",
+   "required": "always",
    "name": "Затруднённая эвакуация пострадавшего",
-   "categories": [
-    "ZP"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -270,19 +383,30 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.6",
+    "5.9"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 113,
+   "category": "ZP",
+   "required": "factor",
    "name": "Поражение током",
-   "categories": [
-    "ZP"
+   "factors": [
+    "F20"
    ],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -291,19 +415,28 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.2",
+    "5.10"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 114,
+   "category": "OG",
+   "required": "always",
    "name": "Пожар / взрыв",
-   "categories": [
-    "OG"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -312,19 +445,29 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.4",
+    "5.5",
+    "5.10"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 115,
+   "category": "OG",
+   "required": "always",
    "name": "Ожоги, брызги металла, излучение",
-   "categories": [
-    "OG"
-   ],
+   "factors": [],
+   "min_severity_level": "medium",
    "victim_ids": [
     1,
     2
@@ -333,19 +476,29 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.10"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 116,
+   "category": "OG",
+   "required": "factor",
    "name": "Поражение током при электросварке",
-   "categories": [
-    "OG"
+   "factors": [
+    "F35"
    ],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -354,19 +507,27 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.10"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 117,
+   "category": "OG",
+   "required": "always",
    "name": "Отравление сварочными аэрозолями / газами",
-   "categories": [
-    "OG"
-   ],
+   "factors": [],
+   "min_severity_level": "medium",
    "victim_ids": [
     1,
     2
@@ -375,19 +536,28 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.4",
+    "5.10"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 118,
+   "category": "GO",
+   "required": "always",
    "name": "Отравление (H2S, углеводороды)",
-   "categories": [
-    "GO"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -396,19 +566,28 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.4",
+    "5.10"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 119,
+   "category": "GO",
+   "required": "always",
    "name": "Взрыв / пожар",
-   "categories": [
-    "GO"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -417,19 +596,30 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.2",
+    "5.3"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 120,
+   "category": "GO",
+   "required": "factor",
    "name": "Выброс среды под давлением",
-   "categories": [
-    "GO"
+   "factors": [
+    "F08"
    ],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -438,19 +628,27 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.2"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 121,
+   "category": "VS",
+   "required": "always",
    "name": "Падение с высоты",
-   "categories": [
-    "VS"
-   ],
+   "factors": [],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -459,19 +657,27 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.6"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 122,
+   "category": "VS",
+   "required": "always",
    "name": "Падение предметов на людей внизу",
-   "categories": [
-    "VS"
-   ],
+   "factors": [],
+   "min_severity_level": "medium",
    "victim_ids": [
     1,
     2
@@ -480,19 +686,28 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.5",
+    "5.10"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 123,
+   "category": "VS",
+   "required": "always",
    "name": "Неблагоприятные погодные условия",
-   "categories": [
-    "VS"
-   ],
+   "factors": [],
+   "min_severity_level": "medium",
    "victim_ids": [
     1,
     2
@@ -501,19 +716,30 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.10"
+   ],
+   "severity_if_missing": "significant"
   },
   {
    "id": 124,
+   "category": "VS",
+   "required": "factor",
    "name": "Поражение током (ВЛ, электрооборудование)",
-   "categories": [
-    "VS"
+   "factors": [
+    "F02",
+    "F09"
    ],
+   "min_severity_level": "high",
    "victim_ids": [
     1,
     2
@@ -522,19 +748,27 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [
+    "5.2"
+   ],
+   "severity_if_missing": "critical"
   },
   {
    "id": 125,
+   "category": "DR",
+   "required": "always",
    "name": "Опасность по описанию работ",
-   "categories": [
-    "DR"
-   ],
+   "factors": [],
+   "min_severity_level": null,
    "victim_ids": [
     1,
     2
@@ -543,47 +777,53 @@
     1,
     2
    ],
-   "control_ids": [
+   "typical_existing_control_ids": [
     1,
     2,
     3,
     4
-   ]
+   ],
+   "typical_additional_control_ids": [
+    5
+   ],
+   "linked_sections": [],
+   "severity_if_missing": "critical"
   }
  ],
  "controls": [
   {
    "id": 1,
-   "text": "Инструктаж бригады перед началом работ",
-   "level": "организационная",
-   "affects": "П"
+   "name": "Инструктаж бригады перед началом работ",
+   "hierarchy_level": "administrative",
+   "affects": "P"
   },
   {
    "id": 2,
-   "text": "Ограждение опасной зоны",
-   "level": "инженерная",
-   "affects": "П"
+   "name": "Ограждение опасной зоны",
+   "hierarchy_level": "engineering",
+   "affects": "P"
   },
   {
    "id": 3,
-   "text": "Применение средств индивидуальной защиты",
-   "level": "СИЗ",
-   "affects": "В"
+   "name": "Применение средств индивидуальной защиты",
+   "hierarchy_level": "ppe",
+   "affects": "B"
   },
   {
    "id": 4,
-   "text": "Исключение опасной операции из технологии",
-   "level": "устранение",
-   "affects": "П+В"
+   "name": "Исключение опасной операции из технологии",
+   "hierarchy_level": "elimination",
+   "affects": "PB"
   },
   {
    "id": 5,
-   "text": "Страховка работников второй линией",
-   "level": "инженерная",
-   "affects": "В",
-   "section": "5.6"
+   "name": "Страховка работников второй линией",
+   "hierarchy_level": "engineering",
+   "affects": "B",
+   "linked_section": "5.6"
   }
  ],
+ "measures": [],
  "victims": [
   {
    "id": 1,
@@ -604,22 +844,29 @@
    "name": "Отравление"
   }
  ],
+ "roles": [
+  {
+   "id": 1,
+   "name": "Производитель работ"
+  }
+ ],
  "implement_when": [
   {
    "id": 1,
-   "before_start": true
+   "name": "До начала работ"
   },
   {
    "id": 2,
-   "before_start": false
+   "name": "В ходе работ"
   }
  ],
- "profiles": {
-  "NGDU-2": {
+ "profiles": [
+  {
+   "unitCode": "NGDU-2",
    "objects": [],
-   "factors": {
+   "factor_defaults": {
     "F10": "no"
    }
   }
- }
+ ]
 }

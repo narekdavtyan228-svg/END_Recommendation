@@ -46,3 +46,6 @@ golden: 42/42 cases match, critical recall 1.000, precision 1.000
 | llm_01_GP | yes | 0 | 0 |
 | llm_02_ZR | yes | 0 | 0 |
 | llm_03_VS | yes | 0 | 0 |
+
+## Acceptance cases (code stage): 16/16 pass
+

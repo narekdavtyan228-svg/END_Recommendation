@@ -49,7 +49,7 @@ def test_check_returns_code_findings_and_versions(client: TestClient, hse: dict[
     assert (
         data["status"] == "code_done"
         and data["llm"] == "pending"
-        and data["rulesetVersion"] == "1.2-draft"
+        and data["rulesetVersion"] == "1.3-draft"
     )
     assert data["catalogVersion"] == "omg-cat-test-1" and data["contentHash"].startswith("sha256:")
     s02 = next(f for f in data["findings"] if f["ruleCode"] == "S02")
@@ -274,7 +274,7 @@ def test_gate_six_scenarios(client: TestClient, hse: dict[str, str]) -> None:
     digest = zr["end"]["contentHash"]
     # 1. no run for this hash yet
     g = gate(client, hse, "end_1", digest)
-    assert not g["allowed"] and g["blockers"][0]["code"] == "no_run"
+    assert not g["allowed"] and g["blockers"][0]["code"] == "no_run_for_content_hash"
     # 2. open critical findings block
     data = post(client, hse, zr).json()
     g = gate(client, hse, "end_1", digest)
@@ -302,14 +302,15 @@ def test_gate_six_scenarios(client: TestClient, hse: dict[str, str]) -> None:
     assert gate(client, hse, "end_1", digest)["allowed"]
     other = body_of([{"section": "5.1", "text": "Другой текст"}], category="ZR", flags=flags)
     assert (
-        gate(client, hse, "end_1", other["end"]["contentHash"])["blockers"][0]["code"] == "no_run"
+        gate(client, hse, "end_1", other["end"]["contentHash"])["blockers"][0]["code"]
+        == "no_run_for_content_hash"
     )
 
 
 def test_gate_other_content_hash_is_blocked(client: TestClient, hse: dict[str, str]) -> None:
     post(client, hse, body_of())
     g = gate(client, hse, "end_1", "sha256:" + "f" * 64)
-    assert not g["allowed"] and g["blockers"][0]["code"] == "no_run"
+    assert not g["allowed"] and g["blockers"][0]["code"] == "no_run_for_content_hash"
 
 
 def test_catalog_version_endpoint(client: TestClient, hse: dict[str, str]) -> None:

@@ -10,7 +10,7 @@
   "end": {
    "endRef": "end_golden",
    "snapshotVersion": 1,
-   "contentHash": "sha256:0247f2cc8fda8234655b5f282abf4756079b83bab01e03365aebe5d64ef640c7",
+   "contentHash": "sha256:685e2a4f138e6659030654deaf6c784465a9bed610b85c4a4c6c327c5ce3345e",
    "mode": "full"
   },
   "context": {
@@ -136,11 +136,13 @@
     ],
     "b1": 5,
     "p1": 1,
-    "additionalControlIds": [],
-    "b2": null,
-    "p2": null,
-    "controlResponsibleRoleId": null,
-    "implementWhenId": null
+    "additionalControlIds": [
+     2
+    ],
+    "b2": 5,
+    "p2": 1,
+    "controlResponsibleRoleId": 1,
+    "implementWhenId": 1
    }
   ],
   "factorAnswers": {
@@ -183,7 +185,15 @@
    "rule": "N12",
    "target": {
     "type": "flag",
-    "flag": "gasAirControl"
+    "field": "gasAirControl"
+   },
+   "severity": "critical"
+  },
+  {
+   "rule": "N13",
+   "target": {
+    "type": "flag",
+    "field": "gasAirControl"
    },
    "severity": "critical"
   }

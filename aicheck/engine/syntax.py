@@ -97,7 +97,7 @@ def check_s06(ctx: CheckContext, params: Params) -> list[Finding]:
     for row in _live(ctx):
         text = row.text[:2000]
         if any(p.search(text) for p in ctx.ruleset.patterns["S06"]):
-            fields = (row.item or {}).get("template_fields") or "пропущенные значения"
+            fields = ", ".join((row.item or {}).get("key_elements", [])) or "пропущенные значения"
             out.append(_fnd(ctx, "S06", row, {"template_fields": fields}, evidence=short(text)))
     return out
 

@@ -26,7 +26,7 @@ log = logging.getLogger(__name__)
 HANDLED_ANY = {"accept", "edit", "reject", "answer", "hide"}
 HANDLED_CRITICAL = {"accept", "edit", "reject"}
 BLOCKER_TEXT = {
-    "no_run": "Проверка для текущего содержимого не выполнена",
+    "no_run_for_content_hash": "Проверка для текущего содержимого не выполнена",
     "critical_open": "Необработанные критичные замечания: {n}",
     "question_open": "Есть открытые вопросы, влияющие на критичные правила: {n}",
 }
@@ -253,7 +253,7 @@ def gate(rt: Runtime, end_ref: str, content_hash_value: str) -> Gate:
     with rt.db.tx() as conn:
         run = queries.find_run_by_hash(conn, end_ref, content_hash_value)
         if run is None:
-            return Gate(allowed=False, blockers=[_blocker("no_run")])
+            return Gate(allowed=False, blockers=[_blocker("no_run_for_content_hash")])
         findings = queries.list_findings(conn, str(run["id"]))
         actions = queries.latest_actions(conn, str(run["id"]))
     critical = [f for f in findings if f["severity"] == "critical" and f["kind"] == "issue"]

@@ -1,0 +1,164 @@
+{
+  "id": "case_07",
+  "title": "Земляные работы: флаг согласования со смежными = Нет",
+  "mode": "code_only",
+  "llm_scenario": "ok",
+  "request": {
+    "schemaVersion": "1.0",
+    "tenant": {
+      "orgCode": "OMG"
+    },
+    "end": {
+      "endRef": "END-TEST-9665",
+      "snapshotVersion": 1,
+      "contentHash": null,
+      "mode": "full"
+    },
+    "context": {
+      "workType": "RPO",
+      "categoryCode": "ZR",
+      "unitCode": "NGDU-2",
+      "shopCode": "CPPD",
+      "description": "Разработка траншеи для замены участка водовода у скв. 9665",
+      "startAt": "2026-09-18T10:41:00+05:00",
+      "endAt": "2026-09-21T00:00:00+05:00",
+      "flags": {
+        "adjacentApproval": false,
+        "gasAirControl": true,
+        "fireService": false,
+        "contractorStaff": false
+      },
+      "attachments": [],
+      "catalogVersion": "test-cat-1"
+    },
+    "measures": [
+      {
+        "rowId": "m-5.1-a",
+        "section": "5.1",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.2-a",
+        "section": "5.2",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.3-a",
+        "section": "5.3",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.4-a",
+        "section": "5.4",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.5-a",
+        "section": "5.5",
+        "text": "Траншею оградить по периметру сигнальным ограждением высотой 1,1 м, установить знаки.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.6-a",
+        "section": "5.6",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.7-a",
+        "section": "5.7",
+        "text": "Предупредить представителей служб — владельцев коммуникаций.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.8-a",
+        "section": "5.8",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.9-a",
+        "section": "5.9",
+        "text": "Проход к траншее по обозначенному маршруту.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.10-a",
+        "section": "5.10",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      }
+    ],
+    "risks": [],
+    "factorAnswers": {},
+    "locale": "ru",
+    "requestedBy": {
+      "userRef": "u_test_issuer",
+      "role": "issuer"
+    }
+  },
+  "steps": null,
+  "expect": {
+    "must_include_any": [
+      [
+        {
+          "rule_code": "N12",
+          "severity": "critical",
+          "target": {
+            "type": "flag",
+            "field": "adjacentApproval"
+          }
+        },
+        {
+          "rule_code": "ZR-01",
+          "severity": "critical"
+        }
+      ]
+    ]
+  },
+  "notes": ""
+}

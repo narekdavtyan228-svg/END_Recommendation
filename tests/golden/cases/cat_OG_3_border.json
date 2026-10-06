@@ -10,7 +10,7 @@
   "end": {
    "endRef": "end_golden",
    "snapshotVersion": 1,
-   "contentHash": "sha256:6b5341d521fc4224ccb04a7aa02811a7ebc50423cae5716d258d0bd941a78bec",
+   "contentHash": "sha256:c398eeb9fa02cd87460473a8bd47e95b282d13ec87a5ce3fb278948d4618e818",
    "mode": "full"
   },
   "context": {
@@ -55,7 +55,7 @@
    {
     "rowId": "m4",
     "section": "5.5",
-    "text": "Оградить место проведения работ сигнальной лентой и выставить знаки безопасности",
+    "text": "Оградить место работ сигнальной лентой, выставить знаки, подготовить первичные средства пожаротушения (огнетушители) и убрать ЛВЖ не ближе 50 м",
     "catalogItemId": null,
     "origin": "manual",
     "notApplicable": false

@@ -71,7 +71,7 @@ def match_catalog(text: str, section: str, catalog: Catalog) -> tuple[str, dict[
     for item in catalog.measures.values():
         if item["section"] != section:
             continue
-        score = fuzz.token_set_ratio(target, compare_form(item["text"]))
+        score = fuzz.token_set_ratio(target, compare_form(item["text_ru"]))
         if score > best[0]:
             best = (score, item)
     if best[0] >= FUZZY_THRESHOLD:

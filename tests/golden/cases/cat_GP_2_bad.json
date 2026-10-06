@@ -10,7 +10,7 @@
   "end": {
    "endRef": "end_golden",
    "snapshotVersion": 1,
-   "contentHash": "sha256:1d35fb5207bc4c5bd9da91bbde22754b7cdd8f187bf590a182584e5ddfa92489",
+   "contentHash": "sha256:aead7868c326986254c9d789021452d708fdcda91b46b9436c4b0d52c7381b06",
    "mode": "full"
   },
   "context": {
@@ -120,11 +120,13 @@
     ],
     "b1": 5,
     "p1": 1,
-    "additionalControlIds": [],
-    "b2": null,
-    "p2": null,
-    "controlResponsibleRoleId": null,
-    "implementWhenId": null
+    "additionalControlIds": [
+     2
+    ],
+    "b2": 5,
+    "p2": 1,
+    "controlResponsibleRoleId": 1,
+    "implementWhenId": 1
    },
    {
     "rowId": "r2",
@@ -225,14 +227,22 @@
    "rule": "GP-01",
    "target": {
     "type": "flag",
-    "flag": "adjacentApproval"
+    "field": "adjacentApproval"
    },
    "severity": "significant"
   },
   {
+   "rule": "N13",
+   "target": {
+    "type": "flag",
+    "field": "adjacentApproval"
+   },
+   "severity": "critical"
+  },
+  {
    "rule": "RA13",
    "target": {
-    "type": "risks",
+    "type": "risk",
     "field": "Поражение током при приближении к ВЛ"
    },
    "severity": "significant"

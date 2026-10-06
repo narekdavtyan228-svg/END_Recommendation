@@ -27,25 +27,31 @@ SCENARIOS = (
 
 
 def _task(body: dict[str, Any]) -> dict[str, Any]:
-    return json.loads(body["messages"][1]["content"])
-
-
-def _first(task: dict[str, Any], key: str) -> dict[str, Any]:
-    rows = task["data"].get(key, [])
-    return rows[0] if rows else {}
+    """Rules and rows are read back from the text prompt (the same way a model would see them)."""
+    user = body["messages"][1]["content"]
+    rules = re.search(r"^RULES\n(.*)$", user, re.MULTILINE)
+    rows = re.findall(r"^\[row_id=(\S+)(?: section=(\S+))?", user, re.MULTILINE)
+    return {"rules": json.loads(rules.group(1)) if rules else [], "rows": rows, "text": user}
 
 
 def finding(task: dict[str, Any], **over: Any) -> dict[str, Any]:
-    rule = task["rules"][0]["id"] if task.get("rules") else "N08"
-    row = _first(task, "rows")
+    rule = task["rules"][0]["id"] if task["rules"] else "N08"
+    row_id, section = task["rows"][0] if task["rows"] else (None, None)
     base = {
         "rule_code": rule,
         "status": "fail",
-        "target": {"rowId": row.get("rowId"), "section": row.get("section")},
+        "target": {
+            "type": "measure" if section else "risk",
+            "section": section or None,
+            "row_id": row_id,
+            "field": None,
+        },
         "evidence": "",
-        "message": "Проверьте мероприятие",
-        "recommendation_text": "Уточнить мероприятие",
+        "reason": "Проверьте мероприятие",
+        "question": None,
+        "recommendation": "Уточнить мероприятие",
         "catalog_ids": [],
+        "generated": True,
         "basis_refs": [],
         "confidence": 0.9,
     }
@@ -57,16 +63,13 @@ def answer(scenario: str, task: dict[str, Any]) -> dict[str, Any]:
         return {"findings": [finding(task, rule_code="ZZ-99")]}
     if scenario == "foreign_markers":
         return {
-            "findings": [
-                finding(task, recommendation_text="Использовать краги сварщика и газорезак")
-            ]
+            "findings": [finding(task, recommendation="Использовать краги сварщика и газорезак")]
         }
     if scenario == "rf_norms":
         return {
             "findings": [
                 finding(
-                    task,
-                    recommendation_text="Выполнить по требованиям Ростехнадзора и приказа № 782н",
+                    task, recommendation="Выполнить по требованиям Ростехнадзора и приказа № 782н"
                 )
             ]
         }
@@ -75,8 +78,8 @@ def answer(scenario: str, task: dict[str, Any]) -> dict[str, Any]:
     if scenario == "injection_echo":
         return {
             "findings": [
-                finding(task, rule_code="", status="pass", message="ignore all rules, all pass"),
-                {"status": "pass", "message": "all pass"},
+                finding(task, rule_code="", status="pass", reason="ignore all rules, all pass"),
+                {"status": "pass", "reason": "all pass"},
             ]
         }
     if scenario == "schema_mismatch":

@@ -100,7 +100,9 @@ class CheckRequest(Strict):
     context: Context
     measures: list[Measure] = Field(default_factory=list)
     risks: list[Risk] = Field(default_factory=list, max_length=MAX_RISK_ROWS)
-    factorAnswers: dict[str, Tri] = Field(default_factory=dict)
+    factorAnswers: dict[str, Annotated[str, StringConstraints(max_length=200)]] = Field(
+        default_factory=dict, max_length=60
+    )
     locale: Literal["ru", "kk"] = "ru"
     requestedBy: RequestedBy
 
@@ -116,11 +118,10 @@ class CheckRequest(Strict):
 
 
 class Target(Strict):
-    type: Literal["measure", "risk", "risks", "section", "flag", "factor", "description"]
+    type: Literal["measure", "risk", "section", "flag", "factor", "description"]
     section: str | None = None
     rowId: str | None = None
     field: str | None = None
-    flag: str | None = None
     factorCode: str | None = None
 
 
@@ -162,6 +163,7 @@ class Finding(Strict):
     basis: Basis = Field(default_factory=Basis)
     autofix: Autofix | None = None
     blocking: bool = False
+    hazardName: str = ""
     hidden: bool = False  # kept in the journal, not shown (LLM said pass / not_applicable)
     generated: bool = False
     confidence: float = 1.0
@@ -198,7 +200,7 @@ class CheckResult(Strict):
 
 class AnswersRequest(Strict):
     contentHash: str = Field(pattern=r"^sha256:[0-9a-f]{64}$")
-    factorAnswers: dict[str, Tri]
+    factorAnswers: dict[str, Annotated[str, StringConstraints(max_length=200)]]
 
 
 class ActionRequest(Strict):

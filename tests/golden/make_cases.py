@@ -6,6 +6,7 @@ Run: python tests/golden/make_cases.py
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -21,17 +22,7 @@ OUT = Path(__file__).parent
 RULES = json.loads(DATA_FILE.read_text(encoding="utf-8"))
 CAT_NAMES = {m["code"]: m["category"] for m in RULES["matrix"]}
 ALL_FACTORS = [f["code"] for f in RULES["factors"]]
-PARAMS = {
-    "P09": {"warm_from": "04-01", "warm_to": "10-31"},
-    "P10": {
-        "scale_min": 1,
-        "scale_max": 5,
-        "zones": {"requires_measures": 6, "high": 12, "unacceptable": 15},
-    },
-    "P11": {"fire_service": True},
-    "P13": {"Высокая": 4, "Средняя": 3},
-    "P14": {"threshold": 6},
-}
+from tests.factory import PARAMS  # noqa: E402
 
 GOOD_TEXT = {
     "5.1": "Остановить технику и оборудование в зоне проведения работ до начала подготовки",
@@ -44,6 +35,11 @@ GOOD_TEXT = {
     "5.9": "Определить и довести до бригады безопасные маршруты движения к месту проведения работ",
     "5.10": "Провести целевой инструктаж бригады и проверить наличие средств защиты на месте",
 }
+FIRE_55 = (
+    "Оградить место работ сигнальной лентой, выставить знаки, подготовить первичные средства "
+    "пожаротушения (огнетушители) и убрать ЛВЖ не ближе 50 м"
+)
+STOP_510 = "Работы на высоте запрещены при сильном ветре, грозе, осадках и плохой видимости"
 GAS_54 = (
     "Выполнить газоанализ: место отбора, время замера, периодичность контроля, прибор и "
     "результат записать в наряд"
@@ -65,59 +61,81 @@ ALL_FLAGS = {
 }
 
 
+LEVEL = {"Высокая": "high", "Средняя": "medium"}
+
+
 def catalog() -> tuple[dict[str, Any], dict[str, int]]:
     hazards: list[dict[str, Any]] = []
     ids: dict[str, int] = {}
     for i, h in enumerate(RULES["hazards"], start=100):
-        codes = [c for c, n in CAT_NAMES.items() if n == h["category"]]
+        code = next(c for c, n in CAT_NAMES.items() if n == h["category"])
         ids[h["hazard"]] = i
+        always = h["required_when"] == "Всегда"
         hazards.append(
             {
                 "id": i,
+                "category": code,
+                "required": "always" if always else "factor",
                 "name": h["hazard"] if "≥" not in h["hazard"] else "Опасность по описанию работ",
-                "categories": codes,
+                "factors": [] if always else re.findall(r"F\d+", h["required_when"]),
+                "min_severity_level": LEVEL.get(h["min_severity_level"]),
                 "victim_ids": [1, 2],
                 "harm_ids": [1, 2],
-                "control_ids": [1, 2, 3, 4],
+                "typical_existing_control_ids": [1, 2, 3, 4],
+                "typical_additional_control_ids": [5],
+                "linked_sections": [
+                    s.strip() for s in h["linked_sections"].split(",") if s.strip().startswith("5.")
+                ],
+                "severity_if_missing": "critical"
+                if h["severity_if_missing"] == "Критично"
+                else "significant",
             }
         )
     controls = [
         {
             "id": 1,
-            "text": "Инструктаж бригады перед началом работ",
-            "level": "организационная",
-            "affects": "П",
+            "name": "Инструктаж бригады перед началом работ",
+            "hierarchy_level": "administrative",
+            "affects": "P",
         },
-        {"id": 2, "text": "Ограждение опасной зоны", "level": "инженерная", "affects": "П"},
+        {
+            "id": 2,
+            "name": "Ограждение опасной зоны",
+            "hierarchy_level": "engineering",
+            "affects": "P",
+        },
         {
             "id": 3,
-            "text": "Применение средств индивидуальной защиты",
-            "level": "СИЗ",
-            "affects": "В",
+            "name": "Применение средств индивидуальной защиты",
+            "hierarchy_level": "ppe",
+            "affects": "B",
         },
         {
             "id": 4,
-            "text": "Исключение опасной операции из технологии",
-            "level": "устранение",
-            "affects": "П+В",
+            "name": "Исключение опасной операции из технологии",
+            "hierarchy_level": "elimination",
+            "affects": "PB",
         },
         {
             "id": 5,
-            "text": "Страховка работников второй линией",
-            "level": "инженерная",
-            "affects": "В",
-            "section": "5.6",
+            "name": "Страховка работников второй линией",
+            "hierarchy_level": "engineering",
+            "affects": "B",
+            "linked_section": "5.6",
         },
     ]
     body = {
         "version": "golden-cat-1",
+        "orgCode": "OMG",
         "hints": {"5.4": "Взять пробу воздушной среды"},
         "hazards": hazards,
         "controls": controls,
+        "measures": [],
         "victims": [{"id": 1, "name": "Работник"}, {"id": 2, "name": "Посторонний"}],
         "harms": [{"id": 1, "name": "Травма"}, {"id": 2, "name": "Отравление"}],
-        "implement_when": [{"id": 1, "before_start": True}, {"id": 2, "before_start": False}],
-        "profiles": {"NGDU-2": {"objects": [], "factors": {"F10": "no"}}},
+        "roles": [{"id": 1, "name": "Производитель работ"}],
+        "implement_when": [{"id": 1, "name": "До начала работ"}, {"id": 2, "name": "В ходе работ"}],
+        "profiles": [{"unitCode": "NGDU-2", "objects": [], "factor_defaults": {"F10": "no"}}],
     }
     return body, ids
 
@@ -126,6 +144,7 @@ CATALOG, HAZARD_ID = catalog()
 
 
 def good_risks(category: str) -> list[dict[str, Any]]:
+    """One row per always-required hazard; rows alternate so that the scores differ (RA22)."""
     risks = []
     always = [
         h
@@ -134,23 +153,30 @@ def good_risks(category: str) -> list[dict[str, Any]]:
     ]
     for i, h in enumerate(always):
         high = h["min_severity_level"] == "Высокая"
-        b1, p1 = (4 + (i % 2), 1) if high else (3, 1)
-        risks.append(
-            {
-                "rowId": f"r{i}",
-                "hazardId": HAZARD_ID[h["hazard"]],
-                "victimIds": [1],
-                "harmIds": [1],
-                "existingControlIds": [1],
-                "b1": b1,
-                "p1": p1,
-                "additionalControlIds": [],
-                "b2": None,
-                "p2": None,
-                "controlResponsibleRoleId": None,
-                "implementWhenId": None,
-            }
-        )
+        row: dict[str, Any] = {
+            "rowId": f"r{i}",
+            "hazardId": HAZARD_ID[h["hazard"]],
+            "victimIds": [1],
+            "harmIds": [1],
+            "existingControlIds": [1],
+            "b1": 4 if high else 3,
+            "p1": 1,
+            "additionalControlIds": [],
+            "b2": None,
+            "p2": None,
+            "controlResponsibleRoleId": None,
+            "implementWhenId": None,
+        }
+        if high and i % 2 == 1:  # R = 5: needs a control, implemented before the work
+            row.update(
+                b1=5,
+                additionalControlIds=[2],
+                b2=5,
+                p2=1,
+                controlResponsibleRoleId=1,
+                implementWhenId=1,
+            )
+        risks.append(row)
     return risks
 
 
@@ -159,6 +185,10 @@ def good(category: str, **over: Any) -> dict[str, Any]:
     for n, section in enumerate(f"5.{i}" for i in range(1, 11)):
         if section in CORE[category]:
             text = GAS_54 if (section == "5.4" and category == "GO") else GOOD_TEXT[section]
+            if section == "5.5" and category == "OG":
+                text = FIRE_55
+            if section == "5.10" and category == "VS":
+                text = STOP_510
             measures.append(
                 {
                     "rowId": f"m{n}",
@@ -248,14 +278,14 @@ def target(request: dict[str, Any], spec: str) -> dict[str, Any]:
     if kind == "sec":
         return {"type": "section", "section": rest}
     if kind == "flag":
-        return {"type": "flag", "flag": rest}
+        return {"type": "flag", "field": rest}
     if kind == "factor":
         return {"type": "factor", "factorCode": rest}
     if kind == "risk":
         row, _, field = rest.partition(":")
         return {"type": "risk", "rowId": row, **({"field": field} if field else {})}
     if kind == "risks":
-        return {"type": "risks", **({"field": rest} if rest else {})}
+        return {"type": "risk", **({"field": rest} if rest else {})}
     return {"type": "description"}
 
 
@@ -347,6 +377,7 @@ def bad_and_border() -> None:
             ("N06", f"row:{rid(r, '5.5')}", "critical"),
             ("N01", f"row:{rid(r, '5.3')}", "significant"),
             ("GP-01", "flag:adjacentApproval", "significant"),
+            ("N13", "flag:adjacentApproval", "critical"),
             ("RA13", "risks:Поражение током при приближении к ВЛ", "significant"),
         ],
     )
@@ -368,6 +399,7 @@ def bad_and_border() -> None:
             ("N12", "flag:gasAirControl", "critical"),
             ("MX", "sec:5.3", "significant"),
             ("ZP-04", "desc", "significant"),
+            ("N13", "flag:gasAirControl", "critical"),
         ],
     )
     # ZP borderline: same gap but the permit is mentioned
@@ -399,7 +431,7 @@ def bad_and_border() -> None:
         "cat_OG_2_bad",
         "огневые: плохой ЭНД",
         r,
-        [("N12", "flag:fireService", "critical"), ("OG-03", "sec:5.4", "critical")],
+        [("N12", "flag:fireService", "significant"), ("OG-03", "sec:5.4", "critical")],
     )
     # OG borderline: F35 (electric welding) unknown -> a question for the hazard
     r = good("OG")
@@ -419,7 +451,11 @@ def bad_and_border() -> None:
         "cat_GO_2_bad",
         "газоопасные: плохой ЭНД",
         r,
-        [("GO-02", "sec:5.4", "significant"), ("N12", "flag:gasAirControl", "critical")],
+        [
+            ("GO-02", "sec:5.4", "significant"),
+            ("N12", "flag:gasAirControl", "critical"),
+            ("N13", "flag:gasAirControl", "critical"),
+        ],
     )
     r = good("GO")
     edit(r, "5.4", GAS_54 + ", повторять после каждого перерыва")
@@ -438,6 +474,7 @@ def bad_and_border() -> None:
             ("VS-04", f"row:{rid(r, '5.5')}", "significant"),
             ("VS-03", f"row:{rid(r, '5.10')}", "recommendation"),
             ("VS-08", "desc", "significant"),
+            ("VS-02", "desc", "significant"),
         ],
     )
     r = good("VS")
@@ -540,7 +577,7 @@ def general() -> None:
         "gen_09_flags",
         "флаг противоречит категории",
         r,
-        [("N12", "flag:gasAirControl", "critical")],
+        [("N12", "flag:gasAirControl", "critical"), ("N13", "flag:gasAirControl", "critical")],
     )
     r = good("ZR")
     drop(r, "5.5")
@@ -602,7 +639,7 @@ def general() -> None:
             ("RA24", "risk:r0", "significant"),
             ("RA25", "risk:r0:implementWhenId", "critical"),
             ("RA08", "risk:r0:additionalControlIds", "critical"),
-            ("RA09", "risk:r0", "significant"),
+            ("RA09", "risk:r0:b2", "significant"),
             ("RA23", "risk:r0", "recommendation"),
         ],
     )

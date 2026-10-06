@@ -44,7 +44,7 @@ def test_catalog_upload_is_idempotent_and_versions_are_immutable(
     assert r.status_code == 409 and r.json()["error"]["field"] == "version"
     assert (
         client.post(
-            "/v1/admin/catalog", json={"version": "x", "unknown": 1}, headers=admin
+            "/v1/admin/catalog", json={"version": "x", "measures": [{"id": 1}]}, headers=admin
         ).status_code
         == 422
     )
@@ -55,22 +55,26 @@ def test_merge_snapshot_applies_changes_and_deactivations() -> None:
     delta = {
         "version": "v2",
         "measures": [
-            {"id": 1042, "section": "5.3", "text": "Новый текст мероприятия", "categories": []},
-            {"id": 3000, "section": "5.1", "text": "Добавленная запись", "categories": []},
+            {"id": 1042, "section": "5.3", "text_ru": "Новый текст мероприятия", "category": "GP"},
+            {"id": 3000, "section": "5.1", "text_ru": "Добавленная запись", "category": "GP"},
+            {
+                "id": 1017,
+                "section": "5.2",
+                "text_ru": "Отключено",
+                "category": "GP",
+                "active": False,
+            },
         ],
-        "deactivated_ids": [1017],
         "hints": {"5.5": "подсказка"},
     }
     merged = sync.merge_snapshot(base, delta)
     cat = Catalog.from_body(merged)
     assert (
         merged["version"] == "v2"
-        and cat.measures[1042]["text"] == "Новый текст мероприятия"
+        and cat.measures[1042]["text_ru"] == "Новый текст мероприятия"
         and 3000 in cat.measures
     )
-    assert 1017 not in cat.measures and merged["deactivated_ids"] == [
-        1017
-    ]  # a deactivated record is no longer matched
+    assert 1017 not in cat.measures  # a deactivated record (active: false) is no longer matched
     assert cat.hints["5.5"] == "подсказка" and cat.hints["5.1"]  # old hints stay
     assert Catalog.from_body(base).measures[1017]  # the old version is unchanged
     assert sync.merge_snapshot(None, {"version": "v1"})["measures"] == []
@@ -97,9 +101,15 @@ def test_sync_stores_new_versions_from_hse_deltas(rt: Runtime) -> None:
         [
             {
                 "version": "v-sync-1",
-                "measures": [{"id": 7, "section": "5.1", "text": "Первая запись"}],
+                "measures": [{"id": 7, "section": "5.1", "text_ru": "Первая запись"}],
             },
-            {"version": "v-sync-2", "deactivated_ids": [7], "hints": {"5.1": "новая"}},
+            {
+                "version": "v-sync-2",
+                "measures": [
+                    {"id": 7, "section": "5.1", "text_ru": "Первая запись", "active": False}
+                ],
+                "hints": {"5.1": "новая"},
+            },
         ]
     )
     assert sync.sync_from_hse(rt, "v-sync-1", client) == "v-sync-1"
@@ -159,7 +169,7 @@ def test_rule_package_lifecycle_upload_activate_and_roll_back(
     body = factory.request("GP", [{"section": "5.1", "text": "Тест"}]).model_dump(mode="json")
     headers = {**hse, "Idempotency-Key": body["end"]["contentHash"]}
     old = client.post("/v1/checks", json=body, headers=headers).json()
-    assert old["rulesetVersion"] == "1.2-draft"
+    assert old["rulesetVersion"] == "1.3-draft"
     assert (
         client.post(f"/v1/admin/rulesets/{first.json()['id']}/activate", headers=admin).json()[
             "status"

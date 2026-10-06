@@ -39,14 +39,27 @@ def _text(value: str, limit: int) -> str:
 
 
 def _target(item: LlmFinding, vin: VerifyInput) -> Target | None:
-    row_id, section = item.target.rowId, item.target.section
-    if row_id:
-        if row_id not in vin.row_ids:
+    """Only rows that were sent can be a target; flags and factors must be known names."""
+    t = item.target
+    if t.type == "flag":
+        return (
+            Target(type="flag", field=t.field)
+            if t.field in type(vin.ctx.request.context.flags).model_fields
+            else None
+        )
+    if t.type == "factor":
+        return (
+            Target(type="factor", factorCode=t.field)
+            if t.field in vin.ctx.ruleset.factors
+            else None
+        )
+    if t.row_id:
+        if t.row_id not in vin.row_ids:
             return None
-        section = vin.row_ids[row_id] or None
-        return Target(type="measure" if section else "risk", section=section, rowId=row_id)
-    if section:
-        return Target(type="section", section=section) if section.startswith("5.") else None
+        section = vin.row_ids[t.row_id] or None
+        return Target(type="measure" if section else "risk", section=section, rowId=t.row_id)
+    if t.section:
+        return Target(type="section", section=t.section) if t.section.startswith("5.") else None
     return Target(type="description")
 
 
@@ -70,7 +83,7 @@ def _catalog_ids(vin: VerifyInput, ids: list[int]) -> tuple[list[int], bool]:
     kept = []
     for i in ids:
         item = catalog.measures.get(i)
-        if item and (not item["categories"] or category in item["categories"]):
+        if item and (not item["category"] or item["category"] == category):
             kept.append(i)
     return kept, len(kept) != len(ids)
 
@@ -96,7 +109,8 @@ def _basis(vin: VerifyInput, rule: dict[str, Any], refs: list[str]) -> tuple[Bas
 
 def _build(item: LlmFinding, vin: VerifyInput, target: Target, rule: dict[str, Any]) -> Finding:
     kind = "question" if item.status == "need_input" or severity_of(rule) == "question" else "issue"
-    message = _text(item.message, MAX_MESSAGE) or str(rule.get("check") or rule.get("name") or "")
+    said = item.question if item.status == "need_input" and item.question else item.reason
+    message = _text(said or "", MAX_MESSAGE) or str(rule.get("check") or rule.get("name") or "")
     row = next((m for m in vin.ctx.rows if m.row_id == target.rowId), None)
     evidence = _text(item.evidence, MAX_EVIDENCE)
     if evidence and (not row or compare_form(evidence) not in compare_form(row.text)):
@@ -104,11 +118,11 @@ def _build(item: LlmFinding, vin: VerifyInput, target: Target, rule: dict[str, A
     ids, _ = _catalog_ids(vin, item.catalog_ids)
     basis, lost = _basis(vin, rule, item.basis_refs)
     recommendation = None
-    if item.recommendation_text:
+    if item.recommendation:
         mode = "replace" if target.type == "measure" else "append"
         recommendation = Recommendation(
             mode=mode,
-            text=Text(ru=_text(item.recommendation_text, MAX_MESSAGE)),
+            text=Text(ru=_text(item.recommendation, MAX_MESSAGE)),
             catalogItemIds=ids,
             generated=True,
         )
@@ -141,12 +155,12 @@ def verify(answer: LlmAnswer, vin: VerifyInput) -> list[Finding]:
             _drop(vin, "unknown_target")
             continue
         rule = vin.ctx.ruleset.rule(item.rule_code)
-        text = f"{item.message} {item.recommendation_text or ''}"
+        text = f"{item.reason} {item.recommendation or ''}"
         if item.status in ("pass", "not_applicable"):
             hidden = _build(item, vin, target, rule)
             result.append(hidden.model_copy(update={"hidden": True}))
             continue
-        if item.recommendation_text and _forbidden_group(vin, item.recommendation_text):
+        if item.recommendation and _forbidden_group(vin, item.recommendation):
             _drop(vin, "forbidden_markers")
             continue
         if _foreign_norm(vin, text):

@@ -114,11 +114,7 @@
      },
      "factorAnswers": {
       "additionalProperties": {
-       "enum": [
-        "yes",
-        "no",
-        "unknown"
-       ],
+       "maxLength": 200,
        "type": "string"
       },
       "title": "Factoranswers",
@@ -240,19 +236,17 @@
     "type": "object"
    },
    "CatControl": {
-    "additionalProperties": false,
     "properties": {
      "affects": {
-      "default": "",
-      "title": "Affects",
-      "type": "string"
-     },
-     "categories": {
-      "items": {
-       "type": "string"
-      },
-      "title": "Categories",
-      "type": "array"
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Affects"
      },
      "hazard_ids": {
       "items": {
@@ -261,47 +255,56 @@
       "title": "Hazard Ids",
       "type": "array"
      },
+     "hierarchy_level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Hierarchy Level"
+     },
      "id": {
       "title": "Id",
       "type": "integer"
      },
-     "level": {
-      "default": "",
-      "title": "Level",
-      "type": "string"
+     "linked_section": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Linked Section"
      },
-     "section": {
-      "default": "",
-      "title": "Section",
-      "type": "string"
-     },
-     "text": {
-      "title": "Text",
+     "name": {
+      "title": "Name",
       "type": "string"
      }
     },
     "required": [
      "id",
-     "text"
+     "name"
     ],
     "title": "CatControl",
     "type": "object"
    },
    "CatHazard": {
-    "additionalProperties": false,
     "properties": {
-     "categories": {
+     "category": {
+      "default": "",
+      "title": "Category",
+      "type": "string"
+     },
+     "factors": {
       "items": {
        "type": "string"
       },
-      "title": "Categories",
-      "type": "array"
-     },
-     "control_ids": {
-      "items": {
-       "type": "integer"
-      },
-      "title": "Control Ids",
+      "title": "Factors",
       "type": "array"
      },
      "harm_ids": {
@@ -315,9 +318,51 @@
       "title": "Id",
       "type": "integer"
      },
+     "linked_sections": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Linked Sections",
+      "type": "array"
+     },
+     "min_severity_level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Min Severity Level"
+     },
      "name": {
       "title": "Name",
       "type": "string"
+     },
+     "required": {
+      "default": "always",
+      "title": "Required",
+      "type": "string"
+     },
+     "severity_if_missing": {
+      "default": "significant",
+      "title": "Severity If Missing",
+      "type": "string"
+     },
+     "typical_additional_control_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Typical Additional Control Ids",
+      "type": "array"
+     },
+     "typical_existing_control_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Typical Existing Control Ids",
+      "type": "array"
      },
      "victim_ids": {
       "items": {
@@ -335,57 +380,75 @@
     "type": "object"
    },
    "CatMeasure": {
-    "additionalProperties": false,
     "properties": {
-     "applies_when": {
-      "items": {
-       "type": "string"
-      },
-      "title": "Applies When",
-      "type": "array"
+     "active": {
+      "default": true,
+      "title": "Active",
+      "type": "boolean"
      },
-     "categories": {
+     "category": {
+      "default": "",
+      "title": "Category",
+      "type": "string"
+     },
+     "code": {
+      "default": "",
+      "title": "Code",
+      "type": "string"
+     },
+     "factors": {
       "items": {
        "type": "string"
       },
-      "title": "Categories",
+      "title": "Factors",
       "type": "array"
      },
      "id": {
       "title": "Id",
       "type": "integer"
      },
+     "item_type": {
+      "default": "optional",
+      "title": "Item Type",
+      "type": "string"
+     },
+     "key_elements": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Key Elements",
+      "type": "array"
+     },
      "section": {
       "pattern": "^5\\.(?:[1-9]|10)$",
       "title": "Section",
       "type": "string"
      },
-     "template_fields": {
+     "text_kk": {
       "default": "",
-      "title": "Template Fields",
+      "title": "Text Kk",
       "type": "string"
      },
-     "text": {
-      "maxLength": 2000,
-      "title": "Text",
+     "text_ru": {
+      "maxLength": 4000,
+      "title": "Text Ru",
       "type": "string"
      },
-     "type": {
-      "default": "",
-      "title": "Type",
-      "type": "string"
+     "version": {
+      "default": 1,
+      "title": "Version",
+      "type": "integer"
      }
     },
     "required": [
      "id",
      "section",
-     "text"
+     "text_ru"
     ],
     "title": "CatMeasure",
     "type": "object"
    },
    "CatNamed": {
-    "additionalProperties": false,
     "properties": {
      "id": {
       "title": "Id",
@@ -404,13 +467,12 @@
     "type": "object"
    },
    "CatProfile": {
-    "additionalProperties": false,
     "properties": {
-     "factors": {
+     "factor_defaults": {
       "additionalProperties": {
        "type": "string"
       },
-      "title": "Factors",
+      "title": "Factor Defaults",
       "type": "object"
      },
      "objects": {
@@ -419,45 +481,25 @@
       },
       "title": "Objects",
       "type": "array"
-     }
-    },
-    "title": "CatProfile",
-    "type": "object"
-   },
-   "CatTiming": {
-    "additionalProperties": false,
-    "properties": {
-     "before_start": {
-      "title": "Before Start",
-      "type": "boolean"
      },
-     "id": {
-      "title": "Id",
-      "type": "integer"
+     "unitCode": {
+      "title": "Unitcode",
+      "type": "string"
      }
     },
     "required": [
-     "id",
-     "before_start"
+     "unitCode"
     ],
-    "title": "CatTiming",
+    "title": "CatProfile",
     "type": "object"
    },
    "CatalogBody": {
-    "additionalProperties": false,
     "properties": {
      "controls": {
       "items": {
        "$ref": "#/components/schemas/CatControl"
       },
       "title": "Controls",
-      "type": "array"
-     },
-     "deactivated_ids": {
-      "items": {
-       "type": "integer"
-      },
-      "title": "Deactivated Ids",
       "type": "array"
      },
      "harms": {
@@ -483,7 +525,7 @@
      },
      "implement_when": {
       "items": {
-       "$ref": "#/components/schemas/CatTiming"
+       "$ref": "#/components/schemas/CatNamed"
       },
       "title": "Implement When",
       "type": "array"
@@ -495,12 +537,24 @@
       "title": "Measures",
       "type": "array"
      },
+     "orgCode": {
+      "default": "",
+      "title": "Orgcode",
+      "type": "string"
+     },
      "profiles": {
-      "additionalProperties": {
+      "items": {
        "$ref": "#/components/schemas/CatProfile"
       },
       "title": "Profiles",
-      "type": "object"
+      "type": "array"
+     },
+     "roles": {
+      "items": {
+       "$ref": "#/components/schemas/CatNamed"
+      },
+      "title": "Roles",
+      "type": "array"
      },
      "version": {
       "maxLength": 100,
@@ -533,13 +587,10 @@
      },
      "factorAnswers": {
       "additionalProperties": {
-       "enum": [
-        "yes",
-        "no",
-        "unknown"
-       ],
+       "maxLength": 200,
        "type": "string"
       },
+      "maxProperties": 60,
       "title": "Factoranswers",
       "type": "object"
      },
@@ -966,6 +1017,11 @@
       "default": false,
       "title": "Generated",
       "type": "boolean"
+     },
+     "hazardName": {
+      "default": "",
+      "title": "Hazardname",
+      "type": "string"
      },
      "hidden": {
       "default": false,
@@ -1537,17 +1593,6 @@
       ],
       "title": "Field"
      },
-     "flag": {
-      "anyOf": [
-       {
-        "type": "string"
-       },
-       {
-        "type": "null"
-       }
-      ],
-      "title": "Flag"
-     },
      "rowId": {
       "anyOf": [
        {
@@ -1574,7 +1619,6 @@
       "enum": [
        "measure",
        "risk",
-       "risks",
        "section",
        "flag",
        "factor",

@@ -1,0 +1,333 @@
+{
+  "id": "case_16",
+  "title": "LLM недоступна (таймаут)",
+  "mode": "integration",
+  "llm_scenario": "timeout",
+  "request": {
+    "schemaVersion": "1.0",
+    "tenant": {
+      "orgCode": "OMG"
+    },
+    "end": {
+      "endRef": "END-TEST-9665",
+      "snapshotVersion": 1,
+      "contentHash": null,
+      "mode": "full"
+    },
+    "context": {
+      "workType": "RPO",
+      "categoryCode": "GP",
+      "unitCode": "NGDU-2",
+      "shopCode": "CPPD",
+      "description": "Грузоподъемная работа на скважине 9665",
+      "startAt": "2026-09-18T10:41:00+05:00",
+      "endAt": "2026-09-21T00:00:00+05:00",
+      "flags": {
+        "adjacentApproval": false,
+        "gasAirControl": true,
+        "fireService": false,
+        "contractorStaff": false
+      },
+      "attachments": [],
+      "catalogVersion": "test-cat-1"
+    },
+    "measures": [
+      {
+        "rowId": "m-5.1-a",
+        "section": "5.1",
+        "text": "Груз, находящийся в подвешенном состоянии, опустить на специально подготовленное место (тура, стеллаж, площадка). Не оставлять груз в подвешенном состоянии без наблюдения.",
+        "catalogItemId": 1007,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.2-a",
+        "section": "5.2",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.3-a",
+        "section": "5.3",
+        "text": "Вывесить на пусковых устройствах предупредительные плакаты: «Не включать – работают люди!», «Грузоподъёмные работы», «Опасная зона».",
+        "catalogItemId": 1016,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.3-b",
+        "section": "5.3",
+        "text": "На месте установки крана (аутригеры, опорные плиты) – подложить подкладки (шпалы, стальные плиты) для предотвращения проседания в грунт; площадка должна быть горизонтальной (уклон не более 3°).",
+        "catalogItemId": 1018,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.4-a",
+        "section": "5.4",
+        "text": "Анализ воздуха у устья скв. 9665 и в зоне стоянки крана до начала работ. Место: устье скважины, площадка крана; время: перед началом и через каждые 2 часа; прибор: переносной газоанализатор; результат: вносится в наряд-допуск до допуска бригады.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.5-a",
+        "section": "5.5",
+        "text": "Опасную зону огородить сигнальным ограждением (переносные стойки с яркой лентой красно-белого цвета), предусмотреть контрольно-пропускные точки для входа в зону.",
+        "catalogItemId": 1026,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.5-b",
+        "section": "5.5",
+        "text": "В зону подъёма (под стрелой и поднятым грузом) нахождение людей – ЗАПРЕЩЕНО в течение всего времени работы крана.",
+        "catalogItemId": 1027,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.6-a",
+        "section": "5.6",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.7-a",
+        "section": "5.7",
+        "text": "Обеспечить радиосвязь между стропальщиком, машинистом крана и ответственным производителем работ на период производства всех грузоподъёмных операций.",
+        "catalogItemId": 1043,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.7-b",
+        "section": "5.7",
+        "text": "Форма записи в вахтенном журнале: дата / время / Ф.И.О. предупреждённого машиниста / подпись / подпись ответственного производителя работ.",
+        "catalogItemId": 1046,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.8-a",
+        "section": "5.8",
+        "text": "—",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": true,
+        "notApplicableReason": "По условиям работ не требуется"
+      },
+      {
+        "rowId": "m-5.9-a",
+        "section": "5.9",
+        "text": "До начала работ ответственный производитель работ обязан ознакомить всех членов бригады с маршрутами движения к месту подъёма (стропаль, машинист, сигнальщик, слесари).",
+        "catalogItemId": 1050,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.9-b",
+        "section": "5.9",
+        "text": "Маршруты должны быть свободны от посторонних предметов, груза, шлангов, кабелей; при наличии – убрать или надёжно обозначить.",
+        "catalogItemId": 1051,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.9-c",
+        "section": "5.9",
+        "text": "Проходы к местам строповки (стеллажи, площадка у устья скважины, монтажная площадка) проверить на проходимость; ширина прохода – не менее 1 м.",
+        "catalogItemId": 1052,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.10-a",
+        "section": "5.10",
+        "text": "Стропы, траверсы, шаклы, карабины – осмотреть перед каждой сменой. Наличие бирки/маркировки с указанием грузоподъёмности и даты испытания – ОБЯЗАТЕЛЬНО.",
+        "catalogItemId": 1060,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.10-b",
+        "section": "5.10",
+        "text": "Запрещено работать краном: при ветре ≥15 м/с, грозе, снегопаде с ограниченной видимостью (<50 м), при обледенении стрелы и крюка.",
+        "catalogItemId": 1065,
+        "catalogItemVersion": 1,
+        "origin": "catalog",
+        "notApplicable": false,
+        "notApplicableReason": null
+      },
+      {
+        "rowId": "m-5.10-c",
+        "section": "5.10",
+        "text": "Перед каждым подъёмом выполнять пробный подъём груза на 200–300 мм для проверки строповки и тормозов.",
+        "catalogItemId": null,
+        "catalogItemVersion": null,
+        "origin": "manual",
+        "notApplicable": false,
+        "notApplicableReason": null
+      }
+    ],
+    "risks": [
+      {
+        "rowId": "r1",
+        "hazardId": 2006,
+        "victimIds": [
+          3007
+        ],
+        "harmIds": [
+          3511
+        ],
+        "existingControlIds": [
+          4019,
+          4020
+        ],
+        "b1": 4,
+        "p1": 2,
+        "additionalControlIds": [
+          4021
+        ],
+        "b2": 4,
+        "p2": 1,
+        "controlResponsibleRoleId": 1,
+        "implementWhenId": 1
+      },
+      {
+        "rowId": "r2",
+        "hazardId": 2007,
+        "victimIds": [
+          3009
+        ],
+        "harmIds": [
+          3511
+        ],
+        "existingControlIds": [
+          4023
+        ],
+        "b1": 4,
+        "p1": 2,
+        "additionalControlIds": [
+          4024
+        ],
+        "b2": 4,
+        "p2": 1,
+        "controlResponsibleRoleId": 1,
+        "implementWhenId": 1
+      },
+      {
+        "rowId": "r3",
+        "hazardId": 2009,
+        "victimIds": [
+          3007
+        ],
+        "harmIds": [
+          3514
+        ],
+        "existingControlIds": [
+          4030
+        ],
+        "b1": 3,
+        "p1": 2,
+        "additionalControlIds": [
+          4031
+        ],
+        "b2": 3,
+        "p2": 1,
+        "controlResponsibleRoleId": 1,
+        "implementWhenId": 1
+      },
+      {
+        "rowId": "r4",
+        "hazardId": 2010,
+        "victimIds": [
+          3002
+        ],
+        "harmIds": [
+          3515
+        ],
+        "existingControlIds": [
+          4032
+        ],
+        "b1": 3,
+        "p1": 2,
+        "additionalControlIds": [
+          4033
+        ],
+        "b2": 3,
+        "p2": 1,
+        "controlResponsibleRoleId": 1,
+        "implementWhenId": 1
+      }
+    ],
+    "factorAnswers": {
+      "F02": "no",
+      "F03": "yes",
+      "F04": "no",
+      "F05": "no",
+      "F07": "no",
+      "F08": "no",
+      "F09": "no",
+      "F10": "no",
+      "F11": "автокран",
+      "F12": "no",
+      "F13": "no",
+      "F14": "no",
+      "F17": "no",
+      "F18": "no",
+      "F19": "no",
+      "F21": "no",
+      "F22": "no",
+      "F23": "no"
+    },
+    "locale": "ru",
+    "requestedBy": {
+      "userRef": "u_test_issuer",
+      "role": "issuer"
+    }
+  },
+  "steps": null,
+  "expect": {
+    "run_status": "llm_unavailable",
+    "llm_status": "unavailable",
+    "rule_findings_present": true,
+    "gate_after_run": {
+      "allowed": true
+    }
+  },
+  "notes": "В базе есть строка 5.4 с origin=manual — она уходит в LLM. Находки кода возвращаются в ответе POST; шлюз не блокируется из-за LLM."
+}

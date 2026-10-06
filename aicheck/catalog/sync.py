@@ -12,8 +12,7 @@ from aicheck.outbound import OutboundDenied, guarded_client
 from aicheck.runtime import Runtime
 
 log = logging.getLogger(__name__)
-LIST_KEYS = ("measures", "hazards", "controls", "victims", "harms", "implement_when")
-MAP_KEYS = ("hints", "profiles")
+LIST_KEYS = ("measures", "hazards", "controls", "victims", "harms", "roles", "implement_when")
 
 
 def import_catalog(rt: Runtime, body: CatalogBody) -> None:
@@ -28,16 +27,16 @@ def import_catalog(rt: Runtime, body: CatalogBody) -> None:
 
 
 def merge_snapshot(base: dict[str, Any] | None, delta: dict[str, Any]) -> dict[str, Any]:
-    """Apply an HSE delta: added/changed records by id, deactivated ids accumulate."""
+    """Apply an HSE delta: added or changed records by id; deactivation is `active: false`."""
     merged: dict[str, Any] = dict(base or {})
     for key in LIST_KEYS:
         by_id = {r["id"]: r for r in merged.get(key, [])}
         by_id.update({r["id"]: r for r in delta.get(key, [])})
         merged[key] = list(by_id.values())
-    for key in MAP_KEYS:
-        merged[key] = {**merged.get(key, {}), **delta.get(key, {})}
-    dead = set(merged.get("deactivated_ids", [])) | set(delta.get("deactivated_ids", []))
-    merged["deactivated_ids"] = sorted(dead)
+    units = {p["unitCode"]: p for p in merged.get("profiles", [])}
+    units.update({p["unitCode"]: p for p in delta.get("profiles", [])})
+    merged["profiles"] = list(units.values())
+    merged["hints"] = {**merged.get("hints", {}), **delta.get("hints", {})}
     merged["version"] = delta["version"]
     return merged
 

@@ -10,7 +10,7 @@
   "end": {
    "endRef": "end_golden",
    "snapshotVersion": 1,
-   "contentHash": "sha256:06b296f1349f13422a4d827ac56ac1e6b36584619dccb1d787064dc46609aec7",
+   "contentHash": "sha256:1fde8e0ad6c3a8933997114526cd050d61e143fac7688b8c13528638ca462fa2",
    "mode": "full"
   },
   "context": {
@@ -115,11 +115,13 @@
     ],
     "b1": 5,
     "p1": 1,
-    "additionalControlIds": [],
-    "b2": null,
-    "p2": null,
-    "controlResponsibleRoleId": null,
-    "implementWhenId": null
+    "additionalControlIds": [
+     2
+    ],
+    "b2": 5,
+    "p2": 1,
+    "controlResponsibleRoleId": 1,
+    "implementWhenId": 1
    },
    {
     "rowId": "r2",
@@ -252,7 +254,7 @@
   {
    "rule": "RA12",
    "target": {
-    "type": "risks",
+    "type": "risk",
     "field": "Падение груза"
    },
    "severity": "critical"

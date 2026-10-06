@@ -10,7 +10,7 @@
   "end": {
    "endRef": "end_golden",
    "snapshotVersion": 1,
-   "contentHash": "sha256:f30d946934880ee1d5827b9c3b3961b7ab7f3360e3d73fe1194b09fe4da361bf",
+   "contentHash": "sha256:dc6b82576ac9836150672a44d8a60e4123a230d6a4651038aad4a2cb0ca08595",
    "mode": "full"
   },
   "context": {
@@ -71,7 +71,7 @@
    {
     "rowId": "m9",
     "section": "5.10",
-    "text": "Провести целевой инструктаж бригады и проверить наличие средств защиты на месте",
+    "text": "Работы на высоте запрещены при сильном ветре, грозе, осадках и плохой видимости",
     "catalogItemId": null,
     "origin": "manual",
     "notApplicable": false

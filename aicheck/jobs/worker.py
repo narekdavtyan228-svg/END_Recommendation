@@ -162,7 +162,9 @@ class LlmWorker:
     def _call(self, system: str, user: str) -> CallOutcome:
         """Network only: runs in a pool thread."""
         try:
-            return CallOutcome("ok", self.llm.ask(system, user, LlmAnswer))
+            return CallOutcome(
+                "ok", self.llm.ask(system, user, LlmAnswer, schema=payload.output_schema())
+            )
         except LlmUnavailable:
             return CallOutcome("unavailable")
         except LlmInvalid:

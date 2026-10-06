@@ -557,8 +557,9 @@ def test_llm_references_outside_the_package_are_dropped_in_the_worker(
         LlmWorker(rt, LlmClient(rt.settings, transport=fake.transport())).step()
     finally:
         fake_llm.answer = original  # type: ignore[assignment]
-    sent = json.loads(fake.calls[0]["messages"][1]["content"])
-    refs = [k["ref"] for k in sent["kb"]]
+    user = fake.calls[0]["messages"][1]["content"]
+    sent = json.loads(user.split("\nCLAUSES\n", 1)[1].split("\n", 1)[0])
+    refs = [k["ref"] for k in sent]
     assert (
         refs[0] == "RK-355:33" and "FAKE:1" not in refs
     )  # the linked clause comes first; FTS may add more

@@ -18,7 +18,7 @@ def resolve_factors(
     request: CheckRequest, ruleset: Ruleset, catalog: Catalog
 ) -> dict[str, FactorValue]:
     profile = catalog.profiles.get(request.context.unitCode or "", {})
-    profile_factors: dict[str, str] = profile.get("factors", {})
+    profile_factors: dict[str, str] = profile.get("factor_defaults", {})
     from_description = _from_description(request.context.description, ruleset)
     result: dict[str, FactorValue] = {}
     for code in ruleset.factors:
@@ -29,9 +29,11 @@ def resolve_factors(
 def _resolve_one(
     code: str, request: CheckRequest, from_description: set[str], profile: dict[str, str]
 ) -> FactorValue:
-    answer = request.factorAnswers.get(code, "unknown")
-    if answer != "unknown":
-        return FactorValue(answer, "answer")
+    answer = request.factorAnswers.get(code, "unknown").strip()
+    if answer.lower() in ("yes", "no"):
+        return FactorValue(answer.lower(), "answer")
+    if answer and answer.lower() != "unknown":
+        return FactorValue("yes", "answer")  # a value of a non-boolean factor (type, height...)
     if code == "F03" and request.context.flags.gasAirControl:
         return FactorValue("yes", "flag")
     if code in from_description:

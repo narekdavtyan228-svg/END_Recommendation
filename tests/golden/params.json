@@ -1,25 +1,68 @@
 {
  "P09": {
-  "warm_from": "04-01",
-  "warm_to": "10-31"
- },
- "P10": {
-  "scale_min": 1,
-  "scale_max": 5,
-  "zones": {
-   "requires_measures": 6,
-   "high": 12,
-   "unacceptable": 15
+  "timezone": "+05:00",
+  "warm": {
+   "from": "04-15",
+   "to": "10-15"
+  },
+  "cold": {
+   "from": "11-15",
+   "to": "03-15"
   }
  },
+ "P10": {
+  "scale": {
+   "B": {
+    "min": 1,
+    "max": 5
+   },
+   "P": {
+    "min": 1,
+    "max": 5
+   }
+  },
+  "zones": [
+   {
+    "code": "acceptable",
+    "from": 1,
+    "to": 4
+   },
+   {
+    "code": "needs_controls",
+    "from": 5,
+    "to": 14
+   },
+   {
+    "code": "unacceptable",
+    "from": 15,
+    "to": 25
+   }
+  ],
+  "residual_if_no_additional_controls": "equals_initial",
+  "high_zone_for_RA23": "unacceptable"
+ },
  "P11": {
-  "fire_service": true
+  "category": "OG",
+  "flag": "fireService",
+  "required_value": true,
+  "when_any_factor_yes": [
+   "F03",
+   "F31",
+   "F34"
+  ],
+  "severity": "significant"
  },
  "P13": {
-  "Высокая": 4,
-  "Средняя": 3
+  "high": 4,
+  "medium": 3,
+  "low": 1
  },
  "P14": {
-  "threshold": 6
+  "min_R": 5
+ },
+ "P15": {
+  "implement_before_start_ids": [
+   1
+  ]
  }
 }

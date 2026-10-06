@@ -10,7 +10,7 @@
   "end": {
    "endRef": "end_golden",
    "snapshotVersion": 1,
-   "contentHash": "sha256:c62f9d9b4a05a22886c654671199fc0078549b78596b41f828dc3824777ea348",
+   "contentHash": "sha256:a84807f1d12150e104d227441abda31255c127aee7405237a0e9b4c811173b5b",
    "mode": "full"
   },
   "context": {
@@ -114,11 +114,13 @@
     ],
     "b1": 5,
     "p1": 1,
-    "additionalControlIds": [],
-    "b2": null,
-    "p2": null,
-    "controlResponsibleRoleId": null,
-    "implementWhenId": null
+    "additionalControlIds": [
+     2
+    ],
+    "b2": 5,
+    "p2": 1,
+    "controlResponsibleRoleId": 1,
+    "implementWhenId": 1
    },
    {
     "rowId": "r2",
@@ -243,7 +245,8 @@
    "rule": "RA09",
    "target": {
     "type": "risk",
-    "rowId": "r0"
+    "rowId": "r0",
+    "field": "b2"
    },
    "severity": "significant"
   },

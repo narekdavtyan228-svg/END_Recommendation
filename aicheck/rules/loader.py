@@ -80,8 +80,8 @@ class Ruleset:
         )
 
     def config(self, code: str) -> dict[str, Any] | None:
-        """Machine-readable parameter value (the `config` object), None while unset."""
-        cfg = self.params.get(code, {}).get("config")
+        """Machine-readable parameter value (the `data` object), None while unset."""
+        cfg = self.params.get(code, {}).get("data")
         return cfg if isinstance(cfg, dict) and cfg else None
 
 

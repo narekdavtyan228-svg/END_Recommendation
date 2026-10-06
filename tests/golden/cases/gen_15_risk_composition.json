@@ -150,7 +150,7 @@
   {
    "rule": "RA12",
    "target": {
-    "type": "risks",
+    "type": "risk",
     "field": "Падение в выемку"
    },
    "severity": "significant"
@@ -158,7 +158,7 @@
   {
    "rule": "RA13",
    "target": {
-    "type": "risks",
+    "type": "risk",
     "field": "Повреждение подземных коммуникаций"
    },
    "severity": "significant"
@@ -174,7 +174,7 @@
   {
    "rule": "RA22",
    "target": {
-    "type": "risks"
+    "type": "risk"
    },
    "severity": "question"
   }

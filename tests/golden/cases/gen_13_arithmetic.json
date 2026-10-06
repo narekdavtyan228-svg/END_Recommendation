@@ -10,7 +10,7 @@
   "end": {
    "endRef": "end_golden",
    "snapshotVersion": 1,
-   "contentHash": "sha256:47da0ecd9b9c805779b6a60012e44269c9de3a9767db144be9ebcc8d97b53c74",
+   "contentHash": "sha256:2f981f9db1addc4bd472024346a4b6adc97fb2168cc31400c98306a150695929",
    "mode": "full"
   },
   "context": {
@@ -113,11 +113,13 @@
     ],
     "b1": 5,
     "p1": 1,
-    "additionalControlIds": [],
-    "b2": null,
-    "p2": null,
-    "controlResponsibleRoleId": null,
-    "implementWhenId": null
+    "additionalControlIds": [
+     2
+    ],
+    "b2": 5,
+    "p2": 1,
+    "controlResponsibleRoleId": 1,
+    "implementWhenId": 1
    },
    {
     "rowId": "r2",

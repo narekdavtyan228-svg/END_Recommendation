@@ -97,22 +97,28 @@ python -m aicheck.jobs.worker                                                  #
 Сервис не хранит ИИН, телефоны и e-mail: они заменяются на `[ИИН]`, `[ТЕЛ]`, `[EMAIL]` до записи и до вызова модели.
 Журнал проверок хранится не менее 3 лет (удаления в коде нет), логи — в stdout. Подробности — `docs/security.md`.
 
-## Параметры правил, которых нет в пакете
+## Параметры правил
 
-Параметры P09, P10, P11, P13, P14 в `omg_ai_check_rules.json` не заполнены (статус «Задать»). Правила, которые от них зависят,
-молчат, пока параметру не добавлен объект `config`. Заполните их в новой версии пакета и загрузите через
-`POST /v1/admin/rulesets` + `…/activate` (откат — активация предыдущей версии):
+Пакет `omg_ai_check_rules.json` (v1.3) содержит пилотные значения параметров P09–P15: человекочитаемое `value` и
+машиночитаемое `data`. Правила читают только `data`, поэтому значения меняются новой версией пакета (без выпуска кода):
+`POST /v1/admin/rulesets` + `…/activate`, откат — активация предыдущей версии. Значения помечены «пилотное — утвердить HSE ОМГ».
 
-```json
-{"code": "P10", "config": {"scale_min": 1, "scale_max": 5,
-                           "zones": {"requires_measures": 6, "high": 12, "unacceptable": 15}}}
-{"code": "P09", "config": {"warm_from": "04-01", "warm_to": "10-31"}}
-{"code": "P11", "config": {"fire_service": true}}
-{"code": "P13", "config": {"Высокая": 4, "Средняя": 3}}
-{"code": "P14", "config": {"threshold": 6}}
-```
+| Параметр | Правила | Что в `data` |
+| --- | --- | --- |
+| P09 | N03 | `warm`, `cold` — периоды `from`/`to` (`MM-DD`); правило работает, только если обе даты работ лежат в одном периоде |
+| P10 | RA03, RA10, RA11, RA23 | `scale` (B, P), `zones` (acceptable / needs_controls / unacceptable), `residual_if_no_additional_controls`, `high_zone_for_RA23` |
+| P11 | N12, OG-05 | флаг противопожарной службы обязателен для огневых работ, если любой из факторов `when_any_factor_yes` = да; критичность — `severity` |
+| P13 | RA21 | минимальная тяжесть по уровню опасности (`high`, `medium`, `low`) |
+| P14 | RA18 | `min_R` — порог Р для обязательной связи с разделом 5 |
+| P15 | RA25 | `implement_before_start_ids` — ID значений «Когда внедрить» = «до начала работ» (из справочника HSE; пока пусто — RA25 молчит) |
 
-(значения — только пример из тестов, не нормы ОМГ). Зоны задаются нижними границами по Р = В × П.
+## Справочник HSE
+
+Формат — как у `tests/golden/official/test_catalog.json` (`POST /v1/admin/catalog`, схема — `contracts/catalog.py`): мероприятия
+(`text_ru`, `category`, `section`, `item_type`, `factors`, `key_elements`, `active`), опасности (`required`, `factors`,
+`min_severity_level`, связи с «кто/как/мерами», `linked_sections`, `severity_if_missing`), меры (`hierarchy_level`, `affects`,
+`hazard_ids`, `linked_section`), роли, сроки внедрения и профили подразделений (`factor_defaults`). Неизвестные поля игнорируются.
+Версии неизменяемы; синхронизация `POST /v1/sync` забирает дельту (`active: false` — деактивация записи).
 
 ## API
 
@@ -163,7 +169,7 @@ def verify_callback(secret: bytes, body: bytes, timestamp: str, signature: str) 
 make lint typecheck sec        # ruff, mypy, bandit, pip-audit, scripts/check_code.py
 make test-stage N=7            # тесты этапов 0…N параллельно (pytest -n auto) + пороги покрытия
 make test-serial               # те же тесты в одном процессе (результат обязан совпасть)
-make golden                    # reports/golden.md: 42 эталонных кейса
+make golden                    # reports/golden.md: 42 собственных кейса + 16 кейсов приёмки (кодовый этап)
 make perf                      # 20 параллельных прогонов, p95 код-этапа ≤ 1 с
 scripts/ci.sh                  # порядок CI: lint → typecheck → sec → test-stage → golden
 ```
