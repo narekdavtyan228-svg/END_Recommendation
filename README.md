@@ -27,6 +27,34 @@ curl -s -X POST localhost:8000/v1/admin/catalog -H "Authorization: Bearer $ADMIN
 Дальше `POST /v1/checks` с телом из `tests/golden/cases/*.json` (поле `request`) и заголовком
 `Idempotency-Key: <end.contentHash>`.
 
+## Запуск на Windows (без make)
+
+`make` не нужен — это только короткие алиасы. Нужен Docker Desktop. В PowerShell из папки проекта:
+
+```powershell
+# 1. Секреты (без установки Python: ключи создаются в контейнере)
+docker run --rm -v "${PWD}:/w" -w /w python:3.12-slim sh -c "pip install -q cryptography && python scripts/dev_secrets.py"
+
+# 2. Файл .env рядом с docker-compose.yml (compose берёт из него только подстановки ${...})
+@"
+LLM_BASE_URL=http://host.docker.internal:<порт вашей модели>
+ALLOW_INSECURE_LLM=true
+LLM_MODEL=<имя модели на шлюзе>
+ALLOWED_OUTBOUND_HOSTS=host.docker.internal,hse.dev.local
+"@ | Set-Content .env
+
+# 3. Ключ вашей модели (если шлюз требует; иначе оставьте dev-llm-key)
+Set-Content -NoNewline secrets/llm_api_key "<ключ>"
+
+# 4. Запуск
+docker compose up --build
+```
+
+Проверка: открыть `http://localhost:8000/v1/ready`. Токены: `pip install pyjwt cryptography`, затем
+`python scripts/dev_token.py hse-backend`. Остальные `make`-цели — прямые команды: `python -m pytest`,
+`python -m aicheck.cli golden`. Пути `/run/secrets/...` из `.env.example` существуют только внутри контейнера,
+а сам сервис `.env` не читает — переменные ему передаёт compose.
+
 ## Запуск с локальной моделью (DeepSeek V4 Flash и др.)
 
 Сервис говорит с любым OpenAI-совместимым шлюзом (vLLM, Ollama, LM Studio…): `POST {LLM_BASE_URL}/v1/chat/completions`
