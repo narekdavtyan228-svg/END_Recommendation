@@ -55,6 +55,18 @@ docker compose up --build
 `python -m aicheck.cli golden`. Пути `/run/secrets/...` из `.env.example` существуют только внутри контейнера,
 а сам сервис `.env` не читает — переменные ему передаёт compose.
 
+## Как посмотреть работу сервиса
+
+Интерфейса у сервиса нет, это API. Swagger со всеми методами: `http://localhost:8000/docs`.
+Готовый пример (загружает справочник, отправляет кейс, ждёт LLM-этап и печатает находки):
+
+```powershell
+pip install pyjwt cryptography pydantic
+python scripts/try_case.py tests/golden/official/cases/case_01.json
+```
+
+Другие кейсы — `tests/golden/official/cases/case_NN.json` и `tests/golden/cases/*.json`.
+
 ## Запуск с локальной моделью (DeepSeek V4 Flash и др.)
 
 Сервис говорит с любым OpenAI-совместимым шлюзом (vLLM, Ollama, LM Studio…): `POST {LLM_BASE_URL}/v1/chat/completions`
